@@ -1,6 +1,8 @@
 package com.example.pts4;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -12,6 +14,12 @@ public class Case {
     Context context;
     ImageView imageView;
     Piece piece;
+    int mainColor;
+    //boolean isClicked;
+
+    public ImageView getImageView() {
+        return imageView;
+    }
 
     public Case(int taille, int coordPixelX, int coordPixelY, Context context, int nomCaseX, int nomCaseY, int color, ConstraintLayout layout) {
         this.taille = taille;
@@ -20,6 +28,7 @@ public class Case {
         this.nomCaseX = nomCaseX;
         this.nomCaseY = nomCaseY;
         this.context = context;
+        mainColor = color;
 
         imageView = new ImageView(context);
         imageView.setBackgroundColor(color);
@@ -31,7 +40,18 @@ public class Case {
 
     }
 
-    public void putPion(Piece piece){
+    public void putPion(Piece piece) {
         this.piece = piece;
     }
+
+    public int getTaille() {
+        return taille;
+    }
+
+    public void clickable(boolean isClicked){
+        if (!isClicked)imageView.setBackgroundColor(Color.GREEN);
+        else imageView.setBackgroundColor(mainColor);
+        isClicked = !isClicked;
+    }
+
 }
