@@ -54,4 +54,23 @@ public class Case {
         isClicked = !isClicked;
     }
 
+    public void setPiece(Piece piece) {
+        this.piece = piece;
+    }
+
+    public boolean hasBlackPiece(){
+        if (piece.isBlack && piece!=null) return true;
+        return false;
+    }
+
+    public boolean hasWhitePiece(){
+        if (!(piece.isBlack) && piece!=null) return true;
+        return false;
+    }
+
+    public boolean hasPiece(){
+        if (piece==null) return false;
+        return true;
+    }
+
 }

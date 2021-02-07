@@ -23,9 +23,10 @@ public class Pion extends Piece {
         cases = echiquier.getCases();
         imageView = new ImageView(context);
         this.isBlack = isBlack;
-        /*if (isBlack)*/
-        imageView.setImageResource(R.drawable.pion);
-        //else mettre pion blanc
+        if (isBlack)
+            imageView.setImageResource(R.drawable.pionnoir);
+        else
+            imageView.setImageResource(R.drawable.pionblanc);
 
         layout.addView(imageView);
         imageView.getLayoutParams().height = (int) (getCase().getTaille() / 1.5);
@@ -38,23 +39,21 @@ public class Pion extends Piece {
 
                 List<Case> list = new ArrayList<>();
                 if (!isBlack) {
-                    if (getCase().nomCaseY > 0)
+                    if (getCase().nomCaseY > 0 && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()))
                         list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 1]);
-                    if (getCase().nomCaseY - 1 > 0)
+                    if (getCase().nomCaseY - 1 > 0 && !cases[getCase().nomCaseX][getCase().nomCaseY - 2].hasPiece() && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()))
                         list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 2]);
                 } else {
-                    if (getCase().nomCaseY < 7)
+                    if (getCase().nomCaseY < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()))
                         list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 1]);
-                    if (getCase().nomCaseY + 1 < 7)
+                    if (getCase().nomCaseY + 1 < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 2].hasPiece()) && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()))
                         list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 2]);
 
                 }
 
-                Log.e("test", Boolean.toString(isOnClick));
 
                 if (!isOnClick) {
                     isOnClick = !isOnClick;
-                    Log.e("nom :", Integer.toString(getCase().nomCaseY + 1));
                     for (Case uneCase : list) {
                         uneCase.clickable(false);
                         uneCase.getImageView().setOnClickListener(new View.OnClickListener() {
@@ -83,6 +82,8 @@ public class Pion extends Piece {
 
     //@Override
     public void deplacement(Case moovingCase) {
+        aCase.setPiece(null);
+        moovingCase.setPiece(this);
         aCase = moovingCase;
         imageView.setY(getCase().coordPixelY + getCase().taille / 2 - imageView.getLayoutParams().height / 2);
         imageView.setX(getCase().coordPixelX - getCase().taille);

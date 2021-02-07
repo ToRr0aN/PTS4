@@ -44,7 +44,7 @@ public class Echiquier {
             }
             alternance = !alternance;
             if (alternance) couleur = Color.WHITE;
-            else couleur = Color.BLACK;
+            else couleur = Color.BLUE;
 
             Case aCase = new Case(taille, incrémenteurX * taille, incrémenteurY * taille + centrage, context,incrémenteurX, incrémenteurY, couleur, layout);
             cases[incrémenteurX][incrémenteurY] = aCase;
@@ -55,6 +55,7 @@ public class Echiquier {
 
         }
         Pion pion = new Pion(cases[0][7], context, layout, false, this);
+        Pion pion2 = new Pion(cases[0][0], context, layout, true, this);
 
 
     }

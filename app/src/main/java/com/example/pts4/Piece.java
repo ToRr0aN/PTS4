@@ -9,6 +9,7 @@ public abstract class Piece {
 
     Case aCase;
     Context context;
+    boolean isBlack;
 
     public Piece(Case aCase, Context context){
         this.aCase = aCase;
