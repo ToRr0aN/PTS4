@@ -59,12 +59,14 @@ public class Case {
     }
 
     public boolean hasBlackPiece(){
-        if (piece.isBlack && piece!=null) return true;
+        if ( piece!=null)
+            if (piece.isBlack) return true;
         return false;
     }
 
     public boolean hasWhitePiece(){
-        if (!(piece.isBlack) && piece!=null) return true;
+        if ( piece!=null)
+            if (!piece.isBlack) return true;
         return false;
     }
 

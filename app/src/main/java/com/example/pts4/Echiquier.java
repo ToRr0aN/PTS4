@@ -54,8 +54,9 @@ public class Echiquier {
             Log.e("test", Integer.toString(i));
 
         }
-        Pion pion = new Pion(cases[0][7], context, layout, false, this);
-        Pion pion2 = new Pion(cases[0][0], context, layout, true, this);
+        Pion pion = new Pion(cases[3][2], context, layout, true, this);
+        Pion pion2 = new Pion(cases[5][2], context, layout, true, this);
+        Pion pion3 = new Pion(cases[4][3], context, layout, false, this);
 
 
     }
