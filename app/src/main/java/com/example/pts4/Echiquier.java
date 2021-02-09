@@ -61,7 +61,7 @@ public class Echiquier {
 
         noirs.add(new Pion(cases[3][2], context, layout, true, this));
         noirs.add(new Pion(cases[5][2], context, layout, true, this));
-        blancs.add(new Pion(cases[4][3], context, layout, false, this));
+        blancs.add(new Cheval(cases[4][3], context, layout, false, this));
 
         manche(true);
 
