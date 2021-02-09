@@ -35,19 +35,23 @@ public class Tour extends Piece {
 
                 list = new ArrayList<>();
 
-                    for(int j=1;j<8;j++) {
+                jmax=8-(getCase().nomCaseY);
+                    for(int j=1;j<jmax;j++) {
                         if (getCase().nomCaseY > 0 && !(cases[getCase().nomCaseX][getCase().nomCaseY + j].hasPiece()))
                             list.add(cases[getCase().nomCaseX][getCase().nomCaseY + j]);
                     }
-                    for(int i=1;i<8;i++) {
+                imax=8-(getCase().nomCaseX);
+                    for(int i=1;i<imax;i++) {
                     if (getCase().nomCaseX > 0 && !(cases[getCase().nomCaseX + i][getCase().nomCaseY].hasPiece()))
                         list.add(cases[getCase().nomCaseX + i][getCase().nomCaseY]);
                 }
-                for(int j=7;j>-1;j--) {
+                    jmin=(-1)+(getCase().nomCaseY);
+                for(int j=7;j>jmin;j--) {
                     if (getCase().nomCaseY < 8 && !(cases[getCase().nomCaseX][getCase().nomCaseY - j].hasPiece()))
                         list.add(cases[getCase().nomCaseX][getCase().nomCaseY - j]);
                 }
-                for(int i=7;i>-1;i--) {
+                imin=(-1)+(getCase().nomCaseX);
+                for(int i=7;i>imin;i--) {
                     if (getCase().nomCaseX < 8 && !(cases[getCase().nomCaseX - i][getCase().nomCaseY].hasPiece()))
                         list.add(cases[getCase().nomCaseX - i][getCase().nomCaseY]);
                 }
