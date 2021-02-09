@@ -8,13 +8,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fou extends Piece {
-    public Fou(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
+public class Reine extends Piece {
+
+    public Reine(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
         super(aCase, context, layout, isBlack, echiquier);
         if (isBlack)
-            imageView.setImageResource(R.drawable.foun2);
+            imageView.setImageResource(R.drawable.reinen2);
         else
-            imageView.setImageResource(R.drawable.foub2);
+            imageView.setImageResource(R.drawable.reineb2);
 
         layout.addView(imageView);
         imageView.getLayoutParams().height = (int) (getCase().getTaille());
@@ -94,6 +95,10 @@ public class Fou extends Piece {
         boolean hasPiece2 = true;
         boolean hasPiece3 = true;
         boolean hasPiece4 = true;
+        boolean hasPiece5 = true;
+        boolean hasPiece6 = true;
+        boolean hasPiece7 = true;
+        boolean hasPiece8 = true;
 
 
         if (!isBlack) {
@@ -131,7 +136,42 @@ public class Fou extends Piece {
                         }
                     } else hasPiece4 = false;
                 }
+                if (getCase().nomCaseY > 0) {
+                    if (getCase().nomCaseY - i > -1 && !(cases[getCase().nomCaseX][getCase().nomCaseY - i].hasWhitePiece()) && hasPiece5) {
+                        list.add(cases[getCase().nomCaseX][getCase().nomCaseY - i]);
+                        if (cases[getCase().nomCaseX][getCase().nomCaseY - i].hasBlackPiece()) {
+                            hasPiece5 = false;
+                        }
+                    } else hasPiece5 = false;
+                }
+                if (getCase().nomCaseY < 8) {
+                    if (getCase().nomCaseY + i < 8 && !(cases[getCase().nomCaseX][getCase().nomCaseY + i].hasWhitePiece()) && hasPiece6) {
+                        list.add(cases[getCase().nomCaseX][getCase().nomCaseY + i]);
+                        if (cases[getCase().nomCaseX][getCase().nomCaseY + i].hasBlackPiece()) {
+                            hasPiece6 = false;
+                        }
+                    } else hasPiece6 = false;
+
+                }
+                if (getCase().nomCaseX > 0) {
+                    if (getCase().nomCaseX - i > -1 && !(cases[getCase().nomCaseX - i][getCase().nomCaseY].hasWhitePiece()) && (hasPiece7)) {
+                        list.add(cases[getCase().nomCaseX - i][getCase().nomCaseY]);
+                        if (cases[getCase().nomCaseX - i][getCase().nomCaseY].hasBlackPiece()) {
+                            hasPiece7 = false;
+                        }
+                    } else hasPiece7 = false;
+                }
+                if (getCase().nomCaseX < 8) {
+                    if (getCase().nomCaseX + i < 8 && !(cases[getCase().nomCaseX + i][getCase().nomCaseY].hasWhitePiece()) && hasPiece8) {
+                        list.add(cases[getCase().nomCaseX + i][getCase().nomCaseY]);
+                        if (cases[getCase().nomCaseX + i][getCase().nomCaseY].hasBlackPiece()) {
+                            hasPiece8 = false;
+                        }
+                    } else hasPiece8 = false;
+                }
+
             }
+
         } else {
             for (int i = 1; i < 8; i++) {
                 if (getCase().nomCaseY > 0 && getCase().nomCaseX > 0) {
@@ -166,6 +206,38 @@ public class Fou extends Piece {
                             hasPiece4 = false;
                         }
                     } else hasPiece4 = false;
+                }
+                if (getCase().nomCaseY > 0) {
+                    if (getCase().nomCaseY - i > -1 && !(cases[getCase().nomCaseX][getCase().nomCaseY - i].hasBlackPiece()) && hasPiece5) {
+                        list.add(cases[getCase().nomCaseX][getCase().nomCaseY - i]);
+                        if (cases[getCase().nomCaseX][getCase().nomCaseY - i].hasWhitePiece()) {
+                            hasPiece5 = false;
+                        }
+                    } else hasPiece5 = false;
+                }
+                if (getCase().nomCaseY < 8) {
+                    if (getCase().nomCaseY + i < 8 && !(cases[getCase().nomCaseX][getCase().nomCaseY + i].hasBlackPiece()) && hasPiece6) {
+                        list.add(cases[getCase().nomCaseX][getCase().nomCaseY + i]);
+                        if (cases[getCase().nomCaseX][getCase().nomCaseY + i].hasWhitePiece()) {
+                            hasPiece6 = false;
+                        }
+                    } else hasPiece6 = false;
+                }
+                if (getCase().nomCaseX > 0) {
+                    if (getCase().nomCaseX - i > -1 && !(cases[getCase().nomCaseX - i][getCase().nomCaseY].hasBlackPiece()) && (hasPiece7)) {
+                        list.add(cases[getCase().nomCaseX - i][getCase().nomCaseY]);
+                        if (cases[getCase().nomCaseX - i][getCase().nomCaseY].hasWhitePiece()) {
+                            hasPiece7 = false;
+                        }
+                    } else hasPiece7 = false;
+                }
+                if (getCase().nomCaseX < 8) {
+                    if (getCase().nomCaseX + i < 8 && !(cases[getCase().nomCaseX + i][getCase().nomCaseY].hasBlackPiece()) && hasPiece8) {
+                        list.add(cases[getCase().nomCaseX + i][getCase().nomCaseY]);
+                        if (cases[getCase().nomCaseX + i][getCase().nomCaseY].hasWhitePiece()) {
+                            hasPiece8 = false;
+                        }
+                    } else hasPiece8 = false;
                 }
             }
         }

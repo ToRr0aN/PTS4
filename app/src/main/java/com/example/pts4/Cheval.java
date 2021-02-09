@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cheval extends Piece {
 
@@ -36,61 +37,8 @@ public class Cheval extends Piece {
             public void onClick(View v) {
                 echiquier.resetCase(getPiece());
 
+                list = getListOfPossibleCases();
 
-                list = new ArrayList<>();
-                if (!isBlack) {
-                    if (aCase.nomCaseX < 6 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1].hasWhitePiece())) {
-                        list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1]);
-                    }
-                    if (aCase.nomCaseX < 6 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1].hasWhitePiece())) {
-                        list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1]);
-                    }
-                    if (aCase.nomCaseX > 1 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1].hasWhitePiece())) {
-                        list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1]);
-                    }
-                    if (aCase.nomCaseX > 1 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1].hasWhitePiece())) {
-                        list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1]);
-                    }
-
-                    if (aCase.nomCaseX < 7 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2].hasWhitePiece())) {
-                        list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2]);
-                    }
-                    if (aCase.nomCaseX < 7 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2].hasWhitePiece())) {
-                        list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2]);
-                    }
-                    if (aCase.nomCaseX > 0 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2].hasWhitePiece())) {
-                        list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2]);
-                    }
-                    if (aCase.nomCaseX > 0 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2].hasWhitePiece())) {
-                        list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2]);
-                    }
-                } else {
-                    if (aCase.nomCaseX < 6 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1].hasBlackPiece())) {
-                        list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1]);
-                    }
-                    if (aCase.nomCaseX < 6 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1].hasBlackPiece())) {
-                        list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1]);
-                    }
-                    if (aCase.nomCaseX > 1 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1].hasBlackPiece())) {
-                        list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1]);
-                    }
-                    if (aCase.nomCaseX > 1 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1].hasBlackPiece())) {
-                        list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1]);
-                    }
-
-                    if (aCase.nomCaseX < 7 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2].hasBlackPiece())) {
-                        list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2]);
-                    }
-                    if (aCase.nomCaseX < 7 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2].hasBlackPiece())) {
-                        list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2]);
-                    }
-                    if (aCase.nomCaseX > 0 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2].hasBlackPiece())) {
-                        list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2]);
-                    }
-                    if (aCase.nomCaseX > 0 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2].hasBlackPiece())) {
-                        list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2]);
-                    }
-                }
 
 
                 if (!isOnClick) {
@@ -141,5 +89,64 @@ public class Cheval extends Piece {
             }
         });
 
+    }
+
+    @Override
+    public List<Case> getListOfPossibleCases() {
+        List list = new ArrayList<>();
+        if (!isBlack) {
+            if (aCase.nomCaseX < 6 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1].hasWhitePiece())) {
+                list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1]);
+            }
+            if (aCase.nomCaseX < 6 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1].hasWhitePiece())) {
+                list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1]);
+            }
+            if (aCase.nomCaseX > 1 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1].hasWhitePiece())) {
+                list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1]);
+            }
+            if (aCase.nomCaseX > 1 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1].hasWhitePiece())) {
+                list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1]);
+            }
+
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2].hasWhitePiece())) {
+                list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2]);
+            }
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2].hasWhitePiece())) {
+                list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2]);
+            }
+            if (aCase.nomCaseX > 0 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2].hasWhitePiece())) {
+                list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2]);
+            }
+            if (aCase.nomCaseX > 0 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2].hasWhitePiece())) {
+                list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2]);
+            }
+        } else {
+            if (aCase.nomCaseX < 6 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1].hasBlackPiece())) {
+                list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1]);
+            }
+            if (aCase.nomCaseX < 6 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1].hasBlackPiece())) {
+                list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1]);
+            }
+            if (aCase.nomCaseX > 1 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1].hasBlackPiece())) {
+                list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1]);
+            }
+            if (aCase.nomCaseX > 1 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1].hasBlackPiece())) {
+                list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1]);
+            }
+
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2].hasBlackPiece())) {
+                list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2]);
+            }
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2].hasBlackPiece())) {
+                list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2]);
+            }
+            if (aCase.nomCaseX > 0 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2].hasBlackPiece())) {
+                list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2]);
+            }
+            if (aCase.nomCaseX > 0 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2].hasBlackPiece())) {
+                list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2]);
+            }
+        }
+        return list;
     }
 }

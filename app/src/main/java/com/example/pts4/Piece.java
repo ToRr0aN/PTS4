@@ -19,11 +19,13 @@ public abstract class Piece {
     Case cases[][];
     boolean isOnClick = false;
     boolean firstMoove = true;
-
+    boolean isProtected;
+    ConstraintLayout layout;
 
     public Piece(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
         aCase.setPiece(this);
         this.aCase = aCase;
+        this.layout = layout;
         cases = echiquier.getCases();
         this.echiquier = echiquier;
         imageView = new ImageView(context);
@@ -50,6 +52,7 @@ public abstract class Piece {
         priseCase.piece.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //priseCase.piece.deletePiece();
                 priseCase.piece.imageView.setVisibility(View.INVISIBLE);
                 deplacement(priseCase);
                 firstMoove = false;
@@ -64,5 +67,26 @@ public abstract class Piece {
 
     public Piece getPiece(){
         return this;
+    }
+
+    public abstract List<Case> getListOfPossibleCases();
+
+
+
+    public void setProtected(boolean aProtected) {
+        isProtected = aProtected;
+    }
+
+    public List<Case> getListOfPossibleTaken() {
+        return getListOfPossibleCases();
+    }
+
+        public void deletePiece(){
+        layout.removeView(imageView);
+        imageView = null;
+        aCase.setPiece(null);
+        aCase = null;
+        echiquier = null;
+
     }
 }

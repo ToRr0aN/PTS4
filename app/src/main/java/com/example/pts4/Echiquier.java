@@ -21,12 +21,14 @@ public class Echiquier {
     Case cases[][] = new Case[8][8];
     List<Piece> blancs;
     List<Piece> noirs;
-
+    Roi roiN, roiB;
+    ConstraintLayout layout;
+    Context context;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     public Echiquier(Context context, ConstraintLayout layout) {
-
-
+        this.context = context;
+        this.layout = layout;
         DisplayMetrics displayMetrics = new DisplayMetrics();
         context.getDisplay().getRealMetrics(displayMetrics);
         int width = displayMetrics.widthPixels;
@@ -45,8 +47,8 @@ public class Echiquier {
                 alternance = !alternance;
             }
             alternance = !alternance;
-            if (alternance) couleur = Color.WHITE;
-            else couleur = Color.BLUE;
+            if (alternance) couleur = Color.rgb(223, 175, 44);
+            else couleur = Color.rgb(181, 101, 29);
 
             Case aCase = new Case(taille, incrémenteurX * taille, incrémenteurY * taille + centrage, context, incrémenteurX, incrémenteurY, couleur, layout);
             cases[incrémenteurX][incrémenteurY] = aCase;
@@ -75,6 +77,21 @@ public class Echiquier {
         noirs.add(new Cheval(cases[1][0], context, layout, true, this));
         noirs.add(new Cheval(cases[6][0], context, layout, true, this));
 
+        blancs.add(new Fou(cases[2][7], context, layout, false, this));
+        blancs.add(new Fou(cases[5][7], context, layout, false, this));
+
+        noirs.add(new Fou(cases[2][0], context, layout, true, this));
+        noirs.add(new Fou(cases[5][0], context, layout, true, this));
+
+        roiN = new Roi(cases[4][0], context, layout, true, this);
+        noirs.add(roiN);
+
+        roiB = new Roi(cases[4][7], context, layout, false, this);
+        blancs.add(roiB);
+
+
+        noirs.add(new Reine(cases[3][0], context, layout, true, this));
+        blancs.add(new Reine(cases[3][7], context, layout, false, this));
 
 
         manche(true);
@@ -114,18 +131,96 @@ public class Echiquier {
     }
 
     public void manche(boolean tour) {
+
+
+        boolean mat = false;
         if (tour) {
+
+          /*  for (Piece piece : noirs) {
+                Case tmpCase = piece.getCase();
+                tmpCase.setPiece(new Pion(tmpCase, context, layout, false, this));
+                for (Piece piece2 : noirs) {
+
+                    List<Case> list = piece2.getListOfPossibleCases();
+                    for (Case aCase : list) {
+                        if (aCase.equals(tmpCase)) {
+                            tmpCase.imageView.setBackgroundColor(Color.RED);
+                        }
+                    }
+                }
+                tmpCase.piece.deletePiece();
+                tmpCase.setPiece(piece);
+            }
+            echecNoir(roiB.getCase());
+            matNoir();*/
             for (Piece piece : blancs) {
                 piece.showDeplacement();
             }
-        } else {
+        } else {/*
+            echecBlanc(roiN.getCase());
+            matBlanc();*/
             for (Piece piece : noirs) {
                 piece.showDeplacement();
             }
         }
+
     }
 
+    public boolean echecNoir(Case maCase) {
+        for (Piece piece : noirs) {
+            List<Case> list;
+
+                list = (piece).getListOfPossibleTaken();
+
+
+            for (Case aCase : list) {
+                if (aCase.equals(maCase)) {
+                    Log.e("Echec", "des noirs");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean echecBlanc(Case maCase) {
+        for (Piece piece : blancs) {
+            List<Case> list = piece.getListOfPossibleCases();
+            for (Case aCase : list) {
+                if (aCase.equals(maCase)) {
+                    Log.e("Echec", "des blancs");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean matNoir() {
+        List<Case> n = roiB.getListOfPossibleCases();
+        for (Case aCase : n) {
+            if (!echecNoir(aCase)) {
+                return false;
+            }
+        }
+        Log.e("mat", "des noirs");
+        return true;
+    }
+
+    public boolean matBlanc() {
+        List<Case> n = roiN.getListOfPossibleCases();
+        for (Case aCase : n) {
+            if (!echecBlanc(aCase)) {
+                return false;
+            }
+        }
+        Log.e("mat", "des noirs");
+        return true;
+    }
 
 }
+
+
+
 
 

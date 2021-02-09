@@ -10,10 +10,10 @@ import android.widget.ImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Pion extends Piece {
-
 
 
     public Pion(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
@@ -37,34 +37,7 @@ public class Pion extends Piece {
             public void onClick(View v) {
                 echiquier.resetCase(getPiece());
 
-
-                list = new ArrayList<>();
-                if (!isBlack) {
-                    if (getCase().nomCaseY > 0 && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()))
-                        list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 1]);
-                    if (getCase().nomCaseY - 1 > 0 && !cases[getCase().nomCaseX][getCase().nomCaseY - 2].hasPiece() && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()) && firstMoove)
-                        list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 2]);
-                    if (getCase().nomCaseX > 0 && getCase().nomCaseY > 0)
-                        if (cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1].hasBlackPiece())
-                            list.add(cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1]);
-                    if (getCase().nomCaseX < 7 && getCase().nomCaseY > 0)
-                        if (cases[getCase().nomCaseX + 1][getCase().nomCaseY - 1].hasBlackPiece())
-                            list.add(cases[getCase().nomCaseX + 1][getCase().nomCaseY - 1]);
-
-                } else {
-                    if (getCase().nomCaseY < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()))
-                        list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 1]);
-                    if (getCase().nomCaseY + 1 < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 2].hasPiece()) && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()) && firstMoove)
-                        list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 2]);
-                    if (getCase().nomCaseX < 7 && getCase().nomCaseY < 7)
-                        if (cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1].hasWhitePiece())
-                            list.add(cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1]);
-                    if (getCase().nomCaseX > 0 && getCase().nomCaseY < 7)
-                        if (cases[getCase().nomCaseX - 1][getCase().nomCaseY + 1].hasWhitePiece())
-                            list.add(cases[getCase().nomCaseX - 1][getCase().nomCaseY + 1]);
-
-                }
-
+                list = getListOfPossibleCases();
 
                 if (!isOnClick) {
 
@@ -106,7 +79,7 @@ public class Pion extends Piece {
                     for (Case maCase : list) {
                         maCase.getImageView().setOnClickListener(null);
                         maCase.clickable(true);
-                        Log.e("test","eeae");
+                        Log.e("test", "eeae");
                         if (isBlack && maCase.hasWhitePiece()) {
                             maCase.piece.imageView.setOnClickListener(null);
                         } else {
@@ -120,6 +93,53 @@ public class Pion extends Piece {
         });
 
 
+    }
+
+    @Override
+    public List<Case> getListOfPossibleCases() {
+        List list = new ArrayList<>();
+        if (!isBlack) {
+            if (getCase().nomCaseY > 0 && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()))
+                list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 1]);
+            if (getCase().nomCaseY - 1 > 0 && !cases[getCase().nomCaseX][getCase().nomCaseY - 2].hasPiece() && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()) && firstMoove)
+                list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 2]);
+            if (getCase().nomCaseX > 0 && getCase().nomCaseY > 0)
+                if (cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1].hasBlackPiece())
+                    list.add(cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1]);
+            if (getCase().nomCaseX < 7 && getCase().nomCaseY > 0)
+                if (cases[getCase().nomCaseX + 1][getCase().nomCaseY - 1].hasBlackPiece())
+                    list.add(cases[getCase().nomCaseX + 1][getCase().nomCaseY - 1]);
+
+        } else {
+            if (getCase().nomCaseY < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()))
+                list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 1]);
+            if (getCase().nomCaseY + 1 < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 2].hasPiece()) && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()) && firstMoove)
+                list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 2]);
+            if (getCase().nomCaseX < 7 && getCase().nomCaseY < 7)
+                if (cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1].hasWhitePiece())
+                    list.add(cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1]);
+            if (getCase().nomCaseX > 0 && getCase().nomCaseY < 7)
+                if (cases[getCase().nomCaseX - 1][getCase().nomCaseY + 1].hasWhitePiece())
+                    list.add(cases[getCase().nomCaseX - 1][getCase().nomCaseY + 1]);
+
+        }
+        return list;
+    }
+
+    @Override
+    public List<Case> getListOfPossibleTaken() {
+        List<Case> maListe = getListOfPossibleCases();
+        List<Case> tmp = new ArrayList<>();
+
+
+        for (Case uneCase : maListe) {
+            if (uneCase.nomCaseX == aCase.nomCaseX) {
+                tmp.add(uneCase);
+            }
+        }for (Case uneCase : tmp) {
+            maListe.remove(uneCase);
+        }
+        return maListe;
     }
 
 
