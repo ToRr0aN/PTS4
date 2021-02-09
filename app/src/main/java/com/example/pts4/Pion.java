@@ -30,7 +30,6 @@ public class Pion extends Piece {
         imageView.setX(getCase().coordPixelX);
     }
 
-
     @Override
     public void showDeplacement() {
         imageView.setOnClickListener(new View.OnClickListener() {
