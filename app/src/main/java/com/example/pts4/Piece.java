@@ -17,6 +17,8 @@ public abstract class Piece {
     Echiquier echiquier;
     List<Case> list;
     Case cases[][];
+    boolean isOnClick = false;
+
 
     public Piece(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
         aCase.setPiece(this);

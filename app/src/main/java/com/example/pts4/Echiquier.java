@@ -62,7 +62,7 @@ public class Echiquier {
         noirs.add(new Pion(cases[3][2], context, layout, true, this));
         noirs.add(new Pion(cases[5][2], context, layout, true, this));
         blancs.add(new Pion(cases[4][3], context, layout, false, this));
-        blancs.add(new Pion(cases[3][6],context,layout,false,this));
+        blancs.add(new Cheval(cases[3][6],context,layout,false,this));
 
         manche(true);
 
@@ -80,6 +80,21 @@ public class Echiquier {
                 if (cases[i][j].hasPiece())
                     cases[i][j].piece.imageView.setOnClickListener(null);
             }
+        }
+    }
+
+    public void resetCase() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                cases[i][j].imageView.setOnClickListener(null);
+                cases[i][j].clickable(true);
+            }
+        }
+        for (Piece piece:blancs) {
+            piece.isOnClick = false;
+        }
+        for (Piece piece:noirs) {
+            piece.isOnClick = false;
         }
     }
 

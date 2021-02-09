@@ -11,14 +11,13 @@ import java.util.ArrayList;
 
 public class Cheval extends Piece {
 
-    boolean isOnClick = false;
 
     public Cheval(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
         super(aCase, context, layout, isBlack, echiquier);
         if (isBlack)
-            imageView.setImageResource(R.drawable.pion);
+            imageView.setImageResource(R.drawable.chevaln2);
         else
-            imageView.setImageResource(R.drawable.pion);
+            imageView.setImageResource(R.drawable.chevalb2);
 
         layout.addView(imageView);
         imageView.getLayoutParams().height = (int) (getCase().getTaille());

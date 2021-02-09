@@ -14,7 +14,6 @@ import java.util.List;
 
 public class Pion extends Piece {
 
-    boolean isOnClick = false;
     boolean firstMoove = true;
 
 
@@ -37,6 +36,8 @@ public class Pion extends Piece {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                echiquier.resetCase();
+
 
                 list = new ArrayList<>();
                 if (!isBlack) {
@@ -67,6 +68,7 @@ public class Pion extends Piece {
 
 
                 if (!isOnClick) {
+
                     isOnClick = true;
                     for (Case uneCase : list) {
                         uneCase.clickable(false);
