@@ -19,9 +19,9 @@ public class Pion extends Piece {
     public Pion(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
         super(aCase, context, layout, isBlack, echiquier);
         if (isBlack)
-            imageView.setImageResource(R.drawable.pion);
+            imageView.setImageResource(R.drawable.pionn2);
         else
-            imageView.setImageResource(R.drawable.pion);
+            imageView.setImageResource(R.drawable.pionb2);
 
         layout.addView(imageView);
         imageView.getLayoutParams().height = (int) (getCase().getTaille());
@@ -30,7 +30,7 @@ public class Pion extends Piece {
         imageView.setX(getCase().coordPixelX);
     }
 
-merdequeluepart
+
     @Override
     public void showDeplacement() {
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +41,7 @@ merdequeluepart
                 if (!isBlack) {
                     if (getCase().nomCaseY > 0 && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()))
                         list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 1]);
-                    if (getCase().nomCaseY - 1 > 0 && !cases[getCase().nomCaseX][getCase().nomCaseY - 2].hasPiece() && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()))
+                    if (getCase().nomCaseY - 1 > 0 && !cases[getCase().nomCaseX][getCase().nomCaseY - 2].hasPiece() && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()) && firstMoove)
                         list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 2]);
                     if (getCase().nomCaseX > 0 && getCase().nomCaseY > 0)
                         if (cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1].hasBlackPiece())
@@ -49,10 +49,11 @@ merdequeluepart
                     if (getCase().nomCaseX < 7 && getCase().nomCaseY > 0)
                         if (cases[getCase().nomCaseX + 1][getCase().nomCaseY - 1].hasBlackPiece())
                             list.add(cases[getCase().nomCaseX + 1][getCase().nomCaseY - 1]);
+
                 } else {
                     if (getCase().nomCaseY < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()))
                         list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 1]);
-                    if (getCase().nomCaseY + 1 < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 2].hasPiece()) && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()))
+                    if (getCase().nomCaseY + 1 < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 2].hasPiece()) && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()) && firstMoove)
                         list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 2]);
                     if (getCase().nomCaseX < 7 && getCase().nomCaseY < 7)
                         if (cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1].hasWhitePiece())
@@ -60,10 +61,13 @@ merdequeluepart
                     if (getCase().nomCaseX > 0 && getCase().nomCaseY < 7)
                         if (cases[getCase().nomCaseX - 1][getCase().nomCaseY + 1].hasWhitePiece())
                             list.add(cases[getCase().nomCaseX - 1][getCase().nomCaseY + 1]);
+
                 }
 
 
                 if (!isOnClick) {
+                    Log.e("test1","test 1");
+                    isOnClick = true;
                     for (Case uneCase : list) {
                         uneCase.clickable(false);
                         if (isBlack) {
@@ -74,6 +78,10 @@ merdequeluepart
                                     @Override
                                     public void onClick(View v) {
                                         deplacement(uneCase);
+                                        for (Piece blancs:echiquier.noirs) {
+                                            blancs.firstMoove = false;
+                                            isOnClick = false;
+                                        }
                                     }
                                 });
                             }
@@ -85,12 +93,17 @@ merdequeluepart
                                     @Override
                                     public void onClick(View v) {
                                         deplacement(uneCase);
+                                        for (Piece noirs:echiquier.blancs) {
+                                            noirs.firstMoove = false;
+                                        }
+                                        isOnClick = false;
                                     }
                                 });
                             }
                         }
                     }
                 } else {
+                    Log.e("test2","test 2");
                     for (Case maCase : list) {
                         maCase.getImageView().setOnClickListener(null);
                         maCase.clickable(true);

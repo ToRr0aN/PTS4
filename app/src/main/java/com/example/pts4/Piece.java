@@ -17,6 +17,7 @@ public abstract class Piece {
     Echiquier echiquier;
     List<Case> list;
     Case cases[][];
+    boolean firstMoove;
 
     public Piece(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
         aCase.setPiece(this);
@@ -25,6 +26,7 @@ public abstract class Piece {
         this.echiquier = echiquier;
         imageView = new ImageView(context);
         this.isBlack = isBlack;
+        firstMoove = true;
     }
 
     public abstract void showDeplacement();
@@ -48,6 +50,15 @@ public abstract class Piece {
             public void onClick(View v) {
                 priseCase.piece.imageView.setVisibility(View.INVISIBLE);
                 deplacement(priseCase);
+                if (isBlack) {
+                    for (Piece noirs : echiquier.blancs) {
+                        noirs.firstMoove = false;
+                    }
+                } else {
+                    for (Piece blancs : echiquier.blancs) {
+                        blancs.firstMoove = false;
+                    }
+                }
             }
         });
     }

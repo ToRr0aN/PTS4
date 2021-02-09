@@ -21,7 +21,6 @@ public class Echiquier {
     Case cases[][] = new Case[8][8];
     List<Piece> blancs;
     List<Piece> noirs;
-    List<Piece> actualTurn;
 
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -50,7 +49,7 @@ public class Echiquier {
             else couleur = Color.BLUE;
 
             Case aCase = new Case(taille, incrémenteurX * taille, incrémenteurY * taille + centrage, context, incrémenteurX, incrémenteurY, couleur, layout);
-            cases[incrémenteurX][incrémenteurY] = aCase;s
+            cases[incrémenteurX][incrémenteurY] = aCase;
 
 
             incrémenteurX++;
@@ -62,7 +61,7 @@ public class Echiquier {
 
         noirs.add(new Pion(cases[3][2], context, layout, true, this));
         noirs.add(new Pion(cases[5][2], context, layout, true, this));
-        blancs.add(new Cheval(cases[4][3], context, layout, false, this));
+        blancs.add(new Pion(cases[4][3], context, layout, false, this));
 
         manche(true);
 
