@@ -7,22 +7,25 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Echiquier {
 
     Case cases[][] = new Case[8][8];
-    Context context;
-
+    List<Piece> blancs;
+    List<Piece> noirs;
+    List<Piece> actualTurn;
 
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     public Echiquier(Context context, ConstraintLayout layout) {
-
 
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -30,14 +33,14 @@ public class Echiquier {
         int width = displayMetrics.widthPixels;
         int height = displayMetrics.heightPixels;
         int taille = width / 8;
-        int centrage = (height - (8 * taille))/2;
+        int centrage = (height - (8 * taille)) / 2;
         int incrémenteurX = 0;
         int incrémenteurY = 0;
         boolean alternance = false;
         int couleur;
         for (int i = 0; i < 64; i++) {
 
-            if (i % 8 == 0 && i!=0) {
+            if (i % 8 == 0 && i != 0) {
                 incrémenteurX = 0;
                 incrémenteurY++;
                 alternance = !alternance;
@@ -46,18 +49,22 @@ public class Echiquier {
             if (alternance) couleur = Color.WHITE;
             else couleur = Color.BLUE;
 
-            Case aCase = new Case(taille, incrémenteurX * taille, incrémenteurY * taille + centrage, context,incrémenteurX, incrémenteurY, couleur, layout);
-            cases[incrémenteurX][incrémenteurY] = aCase;
+            Case aCase = new Case(taille, incrémenteurX * taille, incrémenteurY * taille + centrage, context, incrémenteurX, incrémenteurY, couleur, layout);
+            cases[incrémenteurX][incrémenteurY] = aCase;s
 
 
             incrémenteurX++;
             Log.e("test", Integer.toString(i));
 
         }
-        Pion pion = new Pion(cases[3][2], context, layout, true, this);
-        Pion pion2 = new Pion(cases[5][2], context, layout, true, this);
-        Pion pion3 = new Pion(cases[4][3], context, layout, false, this);
+        blancs = new ArrayList<>();
+        noirs = new ArrayList<>();
 
+        noirs.add(new Pion(cases[3][2], context, layout, true, this));
+        noirs.add(new Pion(cases[5][2], context, layout, true, this));
+        blancs.add(new Cheval(cases[4][3], context, layout, false, this));
+
+        manche(true);
 
     }
 
@@ -66,4 +73,29 @@ public class Echiquier {
         return cases;
     }
 
+    public void reset() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                cases[i][j].imageView.setOnClickListener(null);
+                if (cases[i][j].hasPiece())
+                    cases[i][j].piece.imageView.setOnClickListener(null);
+            }
+        }
+    }
+
+    public void manche(boolean tour) {
+        if (tour) {
+            for (Piece piece : blancs) {
+                piece.showDeplacement();
+            }
+        } else {
+            for (Piece piece : noirs) {
+                piece.showDeplacement();
+            }
+        }
+    }
+
+
 }
+
+
