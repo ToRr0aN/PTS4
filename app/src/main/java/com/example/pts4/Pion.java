@@ -15,6 +15,8 @@ import java.util.List;
 public class Pion extends Piece {
 
     boolean isOnClick = false;
+    boolean firstMoove = true;
+
 
     public Pion(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
         super(aCase, context, layout, isBlack, echiquier);
@@ -65,36 +67,37 @@ public class Pion extends Piece {
 
 
                 if (!isOnClick) {
-                    Log.e("test1","test 1");
                     isOnClick = true;
                     for (Case uneCase : list) {
                         uneCase.clickable(false);
                         if (isBlack) {
                             if (uneCase.hasWhitePiece() && uneCase.nomCaseX != aCase.nomCaseX) {
                                 prise(uneCase);
+                                firstMoove = false;
+
                             } else {
                                 uneCase.imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         deplacement(uneCase);
-                                        for (Piece blancs:echiquier.noirs) {
-                                            blancs.firstMoove = false;
-                                            isOnClick = false;
-                                        }
+                                        firstMoove = false;
+                                        isOnClick = false;
                                     }
+
                                 });
                             }
                         } else {
                             if (uneCase.hasBlackPiece() && uneCase.nomCaseX != aCase.nomCaseX) {
                                 prise(uneCase);
+                                firstMoove = false;
+
                             } else {
                                 uneCase.imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         deplacement(uneCase);
-                                        for (Piece noirs:echiquier.blancs) {
-                                            noirs.firstMoove = false;
-                                        }
+                                        firstMoove = false;
+
                                         isOnClick = false;
                                     }
                                 });
@@ -102,7 +105,6 @@ public class Pion extends Piece {
                         }
                     }
                 } else {
-                    Log.e("test2","test 2");
                     for (Case maCase : list) {
                         maCase.getImageView().setOnClickListener(null);
                         maCase.clickable(true);
@@ -120,7 +122,6 @@ public class Pion extends Piece {
 
 
     }
-
 
 
 }

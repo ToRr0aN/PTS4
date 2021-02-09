@@ -2,10 +2,16 @@ package com.example.pts4;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
+import android.view.View;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-public class Cheval extends Piece{
+import java.util.ArrayList;
+
+public class Cheval extends Piece {
+
+    boolean isOnClick = false;
 
     public Cheval(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
         super(aCase, context, layout, isBlack, echiquier);
@@ -24,11 +30,85 @@ public class Cheval extends Piece{
     @Override
     public void showDeplacement() {
 
-        for (int i=1; i<3; i++){
-            if (aCase.nomCaseX > 2 && aCase.nomCaseY < 7){
-                cases[aCase.nomCaseX + 2][aCase.nomCaseY +1].imageView.setBackgroundColor(Color.GREEN);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list = new ArrayList<>();
+                if (aCase.nomCaseX < 6 && aCase.nomCaseY < 7) {
+                    list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1]);
+                }
+                if (aCase.nomCaseX < 6 && aCase.nomCaseY > 0) {
+                    list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1]);
+                }
+                if (aCase.nomCaseX > 1 && aCase.nomCaseY < 7) {
+                    list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1]);
+                }
+                if (aCase.nomCaseX > 1 && aCase.nomCaseY > 0) {
+                    list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1]);
+                }
+
+                if (aCase.nomCaseX < 7 && aCase.nomCaseY < 6) {
+                    list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2]);
+                }
+                if (aCase.nomCaseX < 7 && aCase.nomCaseY > 1) {
+                    list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2]);
+                }
+                if (aCase.nomCaseX > 0 && aCase.nomCaseY < 6) {
+                    list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2]);
+                }
+                if (aCase.nomCaseX > 0 && aCase.nomCaseY > 1) {
+                    list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2]);
+                }
+
+
+                if (!isOnClick) {
+                    isOnClick = true;
+                    for (Case uneCase : list) {
+                        uneCase.clickable(false);
+                        if (isBlack) {
+                            if (uneCase.hasWhitePiece() && uneCase.nomCaseX != aCase.nomCaseX) {
+                                prise(uneCase);
+                            } else {
+                                uneCase.imageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        deplacement(uneCase);
+                                        for (Piece blancs:echiquier.noirs) {
+                                            isOnClick = false;
+                                        }
+                                    }
+                                });
+                            }
+                        } else {
+                            if (uneCase.hasBlackPiece() && uneCase.nomCaseX != aCase.nomCaseX) {
+                                prise(uneCase);
+                            } else {
+                                uneCase.imageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        deplacement(uneCase);
+                                        isOnClick = false;
+                                    }
+                                });
+                            }
+                        }
+                    }
+                } else {
+                    for (Case maCase : list) {
+                        maCase.getImageView().setOnClickListener(null);
+                        maCase.clickable(true);
+                        if (isBlack && maCase.hasWhitePiece()) {
+                            maCase.piece.imageView.setOnClickListener(null);
+                        } else {
+                            if (!isBlack && maCase.hasBlackPiece())
+                                maCase.piece.imageView.setOnClickListener(null);
+                        }
+                    }
+                    isOnClick = !isOnClick;
+                }
             }
-        }
+        });
 
     }
 }
