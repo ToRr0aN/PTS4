@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 public class Tour extends Piece {
 
@@ -34,28 +35,140 @@ public class Tour extends Piece {
             @Override
             public void onClick(View v) {
 
-                list = new ArrayList<>();
+                echiquier.resetCase(getPiece());
 
-                int jmax = 8 - (getCase().nomCaseY);
-                for (int j = 1; j < jmax; j++) {
-                    if (getCase().nomCaseY > 0 && !(cases[getCase().nomCaseX][getCase().nomCaseY + j].hasPiece()))
-                        list.add(cases[getCase().nomCaseX][getCase().nomCaseY + j]);
+                list = new ArrayList<>();
+                boolean hasPiece1 = true;
+                boolean hasPiece2 = true;
+                boolean hasPiece3 = true;
+                boolean hasPiece4 = true;
+
+
+                if (!isBlack) {
+                    for (int i = 1; i < 8; i++) {
+                        if (getCase().nomCaseY > 0) {
+                            if (getCase().nomCaseY - i > -1 && !(cases[getCase().nomCaseX][getCase().nomCaseY - i].hasWhitePiece()) && hasPiece1) {
+                                list.add(cases[getCase().nomCaseX][getCase().nomCaseY - i]);
+                                if (cases[getCase().nomCaseX][getCase().nomCaseY - i].hasBlackPiece()) {
+                                    hasPiece1 = false;
+                                }
+                            }else hasPiece1 = false;
+                        }
+                        if (getCase().nomCaseY < 8) {
+                            if (getCase().nomCaseY + i < 8 && !(cases[getCase().nomCaseX][getCase().nomCaseY + i].hasWhitePiece()) && hasPiece2) {
+                                list.add(cases[getCase().nomCaseX][getCase().nomCaseY + i]);
+                                if (cases[getCase().nomCaseX][getCase().nomCaseY + i].hasBlackPiece()) {
+                                    hasPiece2 = false;
+                                }
+                            }else hasPiece2 = false;
+
+                        }
+                        if (getCase().nomCaseX > 0) {
+                            if (getCase().nomCaseX - i > -1 && !(cases[getCase().nomCaseX - i][getCase().nomCaseY].hasWhitePiece()) && (hasPiece3)) {
+                                list.add(cases[getCase().nomCaseX - i][getCase().nomCaseY]);
+                                if (cases[getCase().nomCaseX - i][getCase().nomCaseY].hasBlackPiece()) {
+                                    hasPiece3 = false;
+                                }
+                            }else hasPiece3 = false;
+                        }
+                        if (getCase().nomCaseX < 8) {
+                            if (getCase().nomCaseX + i < 8 && !(cases[getCase().nomCaseX + i][getCase().nomCaseY].hasWhitePiece()) && hasPiece4) {
+                                list.add(cases[getCase().nomCaseX + i][getCase().nomCaseY]);
+                                if (cases[getCase().nomCaseX + i][getCase().nomCaseY].hasBlackPiece()) {
+                                    hasPiece4 = false;
+                                }
+                            }else hasPiece4 = false;
+                        }
+                    }
+                } else {
+                    for (int i = 1; i < 8; i++) {
+                        if (getCase().nomCaseY > 0) {
+                            if (getCase().nomCaseY - i > -1 && !(cases[getCase().nomCaseX][getCase().nomCaseY - i].hasBlackPiece()) && hasPiece1) {
+                                list.add(cases[getCase().nomCaseX][getCase().nomCaseY - i]);
+                                if (cases[getCase().nomCaseX][getCase().nomCaseY - i].hasWhitePiece()) {
+                                    hasPiece1 = false;
+                                }
+                            }else hasPiece1 = false;
+                        }
+                        if (getCase().nomCaseY < 8) {
+                            if (getCase().nomCaseY + i < 8 && !(cases[getCase().nomCaseX][getCase().nomCaseY + i].hasBlackPiece()) && hasPiece2) {
+                                list.add(cases[getCase().nomCaseX][getCase().nomCaseY + i]);
+                                if (cases[getCase().nomCaseX][getCase().nomCaseY + i].hasWhitePiece()) {
+                                    hasPiece2 = false;
+                                }
+                            }else hasPiece2 = false;
+                        }
+                        if (getCase().nomCaseX > 0) {
+                            if (getCase().nomCaseX - i > -1 && !(cases[getCase().nomCaseX - i][getCase().nomCaseY].hasBlackPiece()) && (hasPiece3)) {
+                                list.add(cases[getCase().nomCaseX - i][getCase().nomCaseY]);
+                                if (cases[getCase().nomCaseX - i][getCase().nomCaseY].hasWhitePiece()) {
+                                    hasPiece3 = false;
+                                }
+                            }else hasPiece3 = false;
+                        }
+                        if (getCase().nomCaseX < 8) {
+                            if (getCase().nomCaseX + i < 8 && !(cases[getCase().nomCaseX + i][getCase().nomCaseY].hasBlackPiece()) && hasPiece4) {
+                                list.add(cases[getCase().nomCaseX + i][getCase().nomCaseY]);
+                                if (cases[getCase().nomCaseX + i][getCase().nomCaseY].hasWhitePiece()) {
+                                    hasPiece4 = false;
+                                }
+                            }else hasPiece4 = false;
+                        }
+                    }
                 }
-                int imax = 8 - (getCase().nomCaseX);
-                for (int i = 1; i < imax; i++) {
-                    if (getCase().nomCaseX > 0 && !(cases[getCase().nomCaseX + i][getCase().nomCaseY].hasPiece()))
-                        list.add(cases[getCase().nomCaseX + i][getCase().nomCaseY]);
+                Log.e("test1", Boolean.toString(isOnClick));
+
+                if (!isOnClick) {
+
+                    isOnClick = true;
+                    for (Case uneCase : list) {
+                        uneCase.clickable(false);
+                        if (isBlack) {
+                            if (uneCase.hasWhitePiece()) {
+                                prise(uneCase);
+
+                            } else {
+                                uneCase.imageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        deplacement(uneCase);
+                                        isOnClick = false;
+                                    }
+
+                                });
+                            }
+                        } else {
+                            if (uneCase.hasBlackPiece()) {
+                                prise(uneCase);
+
+                            } else {
+                                uneCase.imageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        deplacement(uneCase);
+
+                                        isOnClick = false;
+                                    }
+                                });
+                            }
+                        }
+
+                    }
+                } else {
+                    Log.e("test", "test");
+                    for (Case maCase : list) {
+                        maCase.getImageView().setOnClickListener(null);
+                        maCase.clickable(true);
+                        if (isBlack && maCase.hasWhitePiece()) {
+                            maCase.piece.imageView.setOnClickListener(null);
+                        } else {
+                            if (!isBlack && maCase.hasBlackPiece())
+                                maCase.piece.imageView.setOnClickListener(null);
+                        }
+                    }
+                    isOnClick = !isOnClick;
                 }
-                int jmin = (-1) + (getCase().nomCaseY);
-                for (int j = 7; j > jmin; j--) {
-                    if (getCase().nomCaseY < 8 && !(cases[getCase().nomCaseX][getCase().nomCaseY - j].hasPiece()))
-                        list.add(cases[getCase().nomCaseX][getCase().nomCaseY - j]);
-                }
-                int imin = (-1) + (getCase().nomCaseX);
-                for (int i = 7; i > imin; i--) {
-                    if (getCase().nomCaseX < 8 && !(cases[getCase().nomCaseX - i][getCase().nomCaseY].hasPiece()))
-                        list.add(cases[getCase().nomCaseX - i][getCase().nomCaseY]);
-                }
+
             }
         });
     }

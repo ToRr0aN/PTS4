@@ -59,10 +59,23 @@ public class Echiquier {
         blancs = new ArrayList<>();
         noirs = new ArrayList<>();
 
-        noirs.add(new Pion(cases[3][2], context, layout, true, this));
-        noirs.add(new Pion(cases[5][2], context, layout, true, this));
-        blancs.add(new Pion(cases[4][3], context, layout, false, this));
-        blancs.add(new Cheval(cases[3][6],context,layout,false,this));
+        for (int i = 0; i < 8; i++) {
+            noirs.add(new Pion(cases[i][1], context, layout, true, this));
+            blancs.add(new Pion(cases[i][6], context, layout, false, this));
+        }
+        blancs.add(new Tour(cases[7][7], context, layout, false, this));
+        blancs.add(new Tour(cases[0][7], context, layout, false, this));
+
+        noirs.add(new Tour(cases[0][0], context, layout, true, this));
+        noirs.add(new Tour(cases[7][0], context, layout, true, this));
+
+        blancs.add(new Cheval(cases[6][7], context, layout, false, this));
+        blancs.add(new Cheval(cases[1][7], context, layout, false, this));
+
+        noirs.add(new Cheval(cases[1][0], context, layout, true, this));
+        noirs.add(new Cheval(cases[6][0], context, layout, true, this));
+
+
 
         manche(true);
 
@@ -83,18 +96,20 @@ public class Echiquier {
         }
     }
 
-    public void resetCase() {
+    public void resetCase(Piece maPiece) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 cases[i][j].imageView.setOnClickListener(null);
                 cases[i][j].clickable(true);
             }
         }
-        for (Piece piece:blancs) {
-            piece.isOnClick = false;
+        for (Piece piece : blancs) {
+            if (!(piece.equals(maPiece)))
+                piece.isOnClick = false;
         }
-        for (Piece piece:noirs) {
-            piece.isOnClick = false;
+        for (Piece piece : noirs) {
+            if (!(piece.equals(maPiece)))
+                piece.isOnClick = false;
         }
     }
 

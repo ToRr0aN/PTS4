@@ -14,7 +14,6 @@ import java.util.List;
 
 public class Pion extends Piece {
 
-    boolean firstMoove = true;
 
 
     public Pion(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
@@ -36,7 +35,7 @@ public class Pion extends Piece {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                echiquier.resetCase();
+                echiquier.resetCase(getPiece());
 
 
                 list = new ArrayList<>();
@@ -75,7 +74,6 @@ public class Pion extends Piece {
                         if (isBlack) {
                             if (uneCase.hasWhitePiece() && uneCase.nomCaseX != aCase.nomCaseX) {
                                 prise(uneCase);
-                                firstMoove = false;
 
                             } else {
                                 uneCase.imageView.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +89,6 @@ public class Pion extends Piece {
                         } else {
                             if (uneCase.hasBlackPiece() && uneCase.nomCaseX != aCase.nomCaseX) {
                                 prise(uneCase);
-                                firstMoove = false;
 
                             } else {
                                 uneCase.imageView.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +96,6 @@ public class Pion extends Piece {
                                     public void onClick(View v) {
                                         deplacement(uneCase);
                                         firstMoove = false;
-
                                         isOnClick = false;
                                     }
                                 });
@@ -110,10 +106,11 @@ public class Pion extends Piece {
                     for (Case maCase : list) {
                         maCase.getImageView().setOnClickListener(null);
                         maCase.clickable(true);
+                        Log.e("test","eeae");
                         if (isBlack && maCase.hasWhitePiece()) {
                             maCase.piece.imageView.setOnClickListener(null);
                         } else {
-                            if (!isBlack && maCase.hasBlackPiece())
+                            if (!(isBlack) && maCase.hasBlackPiece())
                                 maCase.piece.imageView.setOnClickListener(null);
                         }
                     }

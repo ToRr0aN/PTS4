@@ -51,7 +51,6 @@ public class Case {
     public void clickable(boolean isClicked){
         if (!isClicked)imageView.setBackgroundColor(Color.GREEN);
         else imageView.setBackgroundColor(mainColor);
-        isClicked = !isClicked;
     }
 
     public void setPiece(Piece piece) {

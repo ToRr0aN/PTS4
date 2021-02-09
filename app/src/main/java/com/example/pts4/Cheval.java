@@ -26,6 +26,7 @@ public class Cheval extends Piece {
         imageView.setX(getCase().coordPixelX);
     }
 
+
     @Override
     public void showDeplacement() {
 
@@ -33,31 +34,62 @@ public class Cheval extends Piece {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list = new ArrayList<>();
-                if (aCase.nomCaseX < 6 && aCase.nomCaseY < 7) {
-                    list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1]);
-                }
-                if (aCase.nomCaseX < 6 && aCase.nomCaseY > 0) {
-                    list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1]);
-                }
-                if (aCase.nomCaseX > 1 && aCase.nomCaseY < 7) {
-                    list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1]);
-                }
-                if (aCase.nomCaseX > 1 && aCase.nomCaseY > 0) {
-                    list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1]);
-                }
+                echiquier.resetCase(getPiece());
 
-                if (aCase.nomCaseX < 7 && aCase.nomCaseY < 6) {
-                    list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2]);
-                }
-                if (aCase.nomCaseX < 7 && aCase.nomCaseY > 1) {
-                    list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2]);
-                }
-                if (aCase.nomCaseX > 0 && aCase.nomCaseY < 6) {
-                    list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2]);
-                }
-                if (aCase.nomCaseX > 0 && aCase.nomCaseY > 1) {
-                    list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2]);
+
+                list = new ArrayList<>();
+                if (!isBlack) {
+                    if (aCase.nomCaseX < 6 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1].hasWhitePiece())) {
+                        list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1]);
+                    }
+                    if (aCase.nomCaseX < 6 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1].hasWhitePiece())) {
+                        list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1]);
+                    }
+                    if (aCase.nomCaseX > 1 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1].hasWhitePiece())) {
+                        list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1]);
+                    }
+                    if (aCase.nomCaseX > 1 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1].hasWhitePiece())) {
+                        list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1]);
+                    }
+
+                    if (aCase.nomCaseX < 7 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2].hasWhitePiece())) {
+                        list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2]);
+                    }
+                    if (aCase.nomCaseX < 7 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2].hasWhitePiece())) {
+                        list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2]);
+                    }
+                    if (aCase.nomCaseX > 0 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2].hasWhitePiece())) {
+                        list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2]);
+                    }
+                    if (aCase.nomCaseX > 0 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2].hasWhitePiece())) {
+                        list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2]);
+                    }
+                } else {
+                    if (aCase.nomCaseX < 6 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1].hasBlackPiece())) {
+                        list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY + 1]);
+                    }
+                    if (aCase.nomCaseX < 6 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1].hasBlackPiece())) {
+                        list.add(cases[aCase.nomCaseX + 2][aCase.nomCaseY - 1]);
+                    }
+                    if (aCase.nomCaseX > 1 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1].hasBlackPiece())) {
+                        list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY + 1]);
+                    }
+                    if (aCase.nomCaseX > 1 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1].hasBlackPiece())) {
+                        list.add(cases[aCase.nomCaseX - 2][aCase.nomCaseY - 1]);
+                    }
+
+                    if (aCase.nomCaseX < 7 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2].hasBlackPiece())) {
+                        list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 2]);
+                    }
+                    if (aCase.nomCaseX < 7 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2].hasBlackPiece())) {
+                        list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 2]);
+                    }
+                    if (aCase.nomCaseX > 0 && aCase.nomCaseY < 6 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2].hasBlackPiece())) {
+                        list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 2]);
+                    }
+                    if (aCase.nomCaseX > 0 && aCase.nomCaseY > 1 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2].hasBlackPiece())) {
+                        list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 2]);
+                    }
                 }
 
 
@@ -66,21 +98,21 @@ public class Cheval extends Piece {
                     for (Case uneCase : list) {
                         uneCase.clickable(false);
                         if (isBlack) {
-                            if (uneCase.hasWhitePiece() && uneCase.nomCaseX != aCase.nomCaseX) {
+                            if (uneCase.hasWhitePiece()) {
                                 prise(uneCase);
                             } else {
                                 uneCase.imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         deplacement(uneCase);
-                                        for (Piece blancs:echiquier.noirs) {
+                                        for (Piece blancs : echiquier.noirs) {
                                             isOnClick = false;
                                         }
                                     }
                                 });
                             }
                         } else {
-                            if (uneCase.hasBlackPiece() && uneCase.nomCaseX != aCase.nomCaseX) {
+                            if (uneCase.hasBlackPiece()) {
                                 prise(uneCase);
                             } else {
                                 uneCase.imageView.setOnClickListener(new View.OnClickListener() {

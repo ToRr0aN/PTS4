@@ -18,6 +18,7 @@ public abstract class Piece {
     List<Case> list;
     Case cases[][];
     boolean isOnClick = false;
+    boolean firstMoove = true;
 
 
     public Piece(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
@@ -42,6 +43,7 @@ public abstract class Piece {
             laCase.clickable(true);
         }
         echiquier.manche(isBlack);
+
     }
 
     public void prise(Case priseCase) {
@@ -50,6 +52,7 @@ public abstract class Piece {
             public void onClick(View v) {
                 priseCase.piece.imageView.setVisibility(View.INVISIBLE);
                 deplacement(priseCase);
+                firstMoove = false;
 
             }
         });
@@ -57,5 +60,9 @@ public abstract class Piece {
 
     public Case getCase() {
         return aCase;
+    }
+
+    public Piece getPiece(){
+        return this;
     }
 }
