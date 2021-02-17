@@ -131,8 +131,6 @@ public class Echiquier {
     }
 
     public void manche(boolean tour) {
-
-
         boolean mat = false;
         if (tour) {
 
@@ -153,17 +151,40 @@ public class Echiquier {
             }
             echecNoir(roiB.getCase());
             matNoir();*/
+            transformationCheck(!tour);
             for (Piece piece : blancs) {
                 piece.showDeplacement();
             }
         } else {/*
             echecBlanc(roiN.getCase());
             matBlanc();*/
+
+            transformationCheck(!tour);
             for (Piece piece : noirs) {
                 piece.showDeplacement();
             }
         }
 
+    }
+
+    public void transformationCheck(boolean couleur){
+        if(couleur){
+            for (Piece piece : blancs) {
+                if(piece instanceof Pion){
+                    if(piece.getCase().nomCaseY==0){
+                        piece=new Reine(piece.getCase(), context, layout, false, this);
+                    }
+                }
+            }
+        }else{
+            for (Piece piece : noirs) {
+                if (piece instanceof Pion) {
+                    if (piece.getCase().nomCaseY == 0) {
+                        piece = new Reine(piece.getCase(), context, layout, true, this);
+                    }
+                }
+            }
+        }
     }
 
     public boolean echecNoir(Case maCase) {
