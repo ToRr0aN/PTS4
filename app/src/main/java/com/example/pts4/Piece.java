@@ -65,12 +65,11 @@ public abstract class Piece {
         return aCase;
     }
 
-    public Piece getPiece(){
+    public Piece getPiece() {
         return this;
     }
 
     public abstract List<Case> getListOfPossibleCases();
-
 
 
     public void setProtected(boolean aProtected) {
@@ -81,11 +80,15 @@ public abstract class Piece {
         return getListOfPossibleCases();
     }
 
-        public void deletePiece(){
+    public void deletePiece() {
         layout.removeView(imageView);
         imageView = null;
         aCase.setPiece(null);
         aCase = null;
+        if (isBlack)
+            echiquier.noirs.remove(this);
+        else
+            echiquier.blancs.remove(this);
         echiquier = null;
 
     }

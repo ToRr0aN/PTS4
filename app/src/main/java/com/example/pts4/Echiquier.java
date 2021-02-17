@@ -167,31 +167,43 @@ public class Echiquier {
 
     }
 
-    public void transformationCheck(boolean couleur){
-        if(couleur){
+    public void transformationCheck(boolean couleur) {
+        List<Piece> deleteList = new ArrayList<>();
+        if (couleur) {
             for (Piece piece : blancs) {
-                if(piece instanceof Pion){
-                    if(piece.getCase().nomCaseY==0){
-                        piece=new Reine(piece.getCase(), context, layout, false, this);
-                    }
-                }
-            }
-        }else{
-            for (Piece piece : noirs) {
                 if (piece instanceof Pion) {
                     if (piece.getCase().nomCaseY == 0) {
-                        piece = new Reine(piece.getCase(), context, layout, true, this);
+                        deleteList.add(piece);
                     }
                 }
             }
+            for (Piece piece : deleteList) {
+                blancs.add(new Reine(piece.getCase(), context, layout, false, this));
+                piece.deletePiece();
+            }
+
+        } else {
+            for (Piece piece : noirs) {
+                if (piece instanceof Pion) {
+                    if (piece.getCase().nomCaseY == 7) {
+                        deleteList.add(piece);
+                    }
+                }
+            }
+            for (Piece piece : deleteList) {
+                noirs.add(new Reine(piece.getCase(), context, layout, true, this));
+                piece.deletePiece();
+            }
         }
+
+
     }
 
     public boolean echecNoir(Case maCase) {
         for (Piece piece : noirs) {
             List<Case> list;
 
-                list = (piece).getListOfPossibleTaken();
+            list = (piece).getListOfPossibleTaken();
 
 
             for (Case aCase : list) {
