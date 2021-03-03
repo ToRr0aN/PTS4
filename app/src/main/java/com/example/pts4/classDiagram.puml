@@ -1,0 +1,99 @@
+
+@startuml
+class com.example.pts4.Fou {
++ void showDeplacement()
++ List<Case> getListOfPossibleCases()
+}
+
+class com.example.pts4.Tour {
++ void showDeplacement()
++ List<Case> getListOfPossibleCases()
+}
+class com.example.pts4.Case {
+~ int taille
+~ Context context
+~ ImageView imageView
+~ Piece piece
+~ int mainColor
++ ImageView getImageView()
++ void putPion(Piece)
++ int getTaille()
++ void clickable(boolean)
++ void setPiece(Piece)
++ boolean hasBlackPiece()
++ boolean hasWhitePiece()
++ boolean hasPiece()
+}
+
+class com.example.pts4.Pion {
++ void showDeplacement()
++ List<Case> getListOfPossibleCases()
++ List<Case> getListOfPossibleTaken()
+}
+abstract class com.example.pts4.Piece {
+~ ImageView imageView
+~ Case aCase
+~ Context context
+~ boolean isBlack
+~ Echiquier echiquier
+~ List<Case> list
+~ Case[][] cases
+~ boolean isOnClick
+~ boolean firstMoove
+~ boolean isProtected
+~ ConstraintLayout layout
++ {abstract}void showDeplacement()
++ void deplacement(Case)
++ void prise(Case)
++ Case getCase()
++ Piece getPiece()
++ {abstract}List<Case> getListOfPossibleCases()
++ void setProtected(boolean)
++ List<Case> getListOfPossibleTaken()
++ void deletePiece()
+}
+class com.example.pts4.Cheval {
++ void showDeplacement()
++ List<Case> getListOfPossibleCases()
+}
+class com.example.pts4.Echiquier {
+~ Case[][] cases
+~ List<Piece> blancs
+~ List<Piece> noirs
+~ Roi roiN
+~ ConstraintLayout layout
+~ Context context
+~ TextView turn
+~ int height
++ Case[][] getCases()
++ void reset()
++ void resetCase(Piece)
++ void manche(boolean)
++ void transformationCheck(boolean)
++ boolean echecNoir(Case)
++ boolean echecBlanc(Case)
++ boolean matNoir()
++ boolean matBlanc()
+}
+class com.example.pts4.Roi {
++ void showDeplacement()
++ List<Case> getListOfPossibleCases()
+}
+class com.example.pts4.Reine {
++ void showDeplacement()
++ List<Case> getListOfPossibleCases()
+}
+
+
+com.example.pts4.Piece <|-- com.example.pts4.Fou
+com.example.pts4.Piece <|-- com.example.pts4.Tour
+com.example.pts4.Piece <|-- com.example.pts4.Pion
+com.example.pts4.Piece <|-- com.example.pts4.Cheval
+com.example.pts4.Piece <|-- com.example.pts4.Roi
+com.example.pts4.Piece <|-- com.example.pts4.Reine
+
+com.example.pts4.Echiquier *-- com.example.pts4.Case
+com.example.pts4.Echiquier *-- com.example.pts4.Piece
+com.example.pts4.Case *-- com.example.pts4.Piece
+
+@enduml

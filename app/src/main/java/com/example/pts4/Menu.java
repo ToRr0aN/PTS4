@@ -1,35 +1,38 @@
 package com.example.pts4;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.graphics.Color;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class Menu extends AppCompatActivity {
 
-    ConstraintLayout layout;
+    Button play;
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.slide_in_right,  R.anim.slide_out_left);
-        setContentView(R.layout.activity_main);
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        setContentView(R.layout.activity_menu);
 
-        layout = findViewById(R.id.main);
-        Echiquier echiquier = new Echiquier(this, layout);
+        play = findViewById(R.id.play);
+
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                play();
+            }
+        });
+    }
+
+    public void play(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
 
     }
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {

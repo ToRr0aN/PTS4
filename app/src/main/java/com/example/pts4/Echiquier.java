@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -24,15 +25,18 @@ public class Echiquier {
     Roi roiN, roiB;
     ConstraintLayout layout;
     Context context;
+    TextView turn;
+    int height, width;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     public Echiquier(Context context, ConstraintLayout layout) {
         this.context = context;
         this.layout = layout;
+        turn = layout.findViewById(R.id.turn);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         context.getDisplay().getRealMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
+        height = displayMetrics.heightPixels;
         int taille = width / 8;
         int centrage = (height - (8 * taille)) / 2;
         int incrémenteurX = 0;
@@ -93,7 +97,6 @@ public class Echiquier {
         noirs.add(new Reine(cases[3][0], context, layout, true, this));
         blancs.add(new Reine(cases[3][7], context, layout, false, this));
 
-
         manche(true);
 
     }
@@ -132,6 +135,7 @@ public class Echiquier {
 
     public void manche(boolean tour) {
         boolean mat = false;
+
         if (tour) {
 
           /*  for (Piece piece : noirs) {
@@ -151,6 +155,7 @@ public class Echiquier {
             }
             echecNoir(roiB.getCase());
             matNoir();*/
+            turn.setY(height - turn.getHeight());
             transformationCheck(!tour);
             for (Piece piece : blancs) {
                 piece.showDeplacement();
@@ -159,6 +164,8 @@ public class Echiquier {
             echecBlanc(roiN.getCase());
             matBlanc();*/
 
+            turn.setY(0);
+            layout.findViewById(R.id.tempTurn).setVisibility(View.INVISIBLE);
             transformationCheck(!tour);
             for (Piece piece : noirs) {
                 piece.showDeplacement();
