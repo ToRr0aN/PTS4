@@ -1,11 +1,13 @@
 package com.example.pts4;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
@@ -76,9 +78,20 @@ public abstract class Piece {
         isProtected = aProtected;
     }
 
-    public List<Case> getListOfPossibleTaken() {
-        return getListOfPossibleCases();
-    }
+    /*public List<Case> getListOfPossibleTaken() {
+        List<Case> list = getListOfPossibleCases();
+        List<Case> listRemove = new ArrayList<>();
+        Log.e("test",Integer.toString(list.size()));
+        for (Case maCase:list) {
+            if (maCase.piece != null && maCase.piece instanceof Roi){
+                Log.e("test","tee");
+                listRemove.add(maCase);
+            }
+        }
+        list.removeAll(listRemove);
+        return list;
+    }*/
+    public List<Case> getListOfPossibleTaken() {return getListOfPossibleCases();}
 
     public void deletePiece() {
         layout.removeView(imageView);
@@ -91,5 +104,11 @@ public abstract class Piece {
             echiquier.blancs.remove(this);
         echiquier = null;
 
+    }
+
+    public boolean isKing(Case maCase){
+        if (maCase.piece !=null && maCase.piece instanceof Roi)
+            return true;
+        return false;
     }
 }

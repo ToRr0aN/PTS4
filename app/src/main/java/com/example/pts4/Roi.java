@@ -1,11 +1,7 @@
 package com.example.pts4;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -90,33 +86,93 @@ public class Roi extends Piece {
         });
     }
 
+
     @Override
     public List<Case> getListOfPossibleCases() {
         List list = new ArrayList<>();
         if (!isBlack) {
-            if (aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX][aCase.nomCaseY + 1].hasWhitePiece()) && !echiquier.echecNoir(cases[aCase.nomCaseX][aCase.nomCaseY + 1])) {
+            if (aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX][aCase.nomCaseY + 1].hasWhitePiece()) && canMove(cases[aCase.nomCaseX][aCase.nomCaseY + 1])) {
                 list.add(cases[aCase.nomCaseX][aCase.nomCaseY + 1]);
             }
-            if (aCase.nomCaseX < 7 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1].hasWhitePiece()) && !echiquier.echecNoir(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1])) {
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1].hasWhitePiece()) && canMove(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1])) {
                 list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1]);
             }
-            if (aCase.nomCaseX < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY].hasWhitePiece()) && !echiquier.echecNoir(cases[aCase.nomCaseX + 1][aCase.nomCaseY])) {
+            if (aCase.nomCaseX < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY].hasWhitePiece()) && canMove(cases[aCase.nomCaseX + 1][aCase.nomCaseY])) {
                 list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY]);
             }
-            if (aCase.nomCaseX > 0 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1].hasWhitePiece()) && !echiquier.echecNoir(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1])) {
+            if (aCase.nomCaseX > 0 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1].hasWhitePiece()) && canMove(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1])) {
                 list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1]);
             }
 
-            if (aCase.nomCaseX > 0 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1].hasWhitePiece()) && !echiquier.echecNoir(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1])) {
+            if (aCase.nomCaseX > 0 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1].hasWhitePiece()) && canMove(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1])) {
                 list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1]);
             }
-            if (aCase.nomCaseX < 7 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1].hasWhitePiece()) && !echiquier.echecNoir(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1])) {
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1].hasWhitePiece()) && canMove(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1])) {
                 list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1]);
             }
-            if (aCase.nomCaseX > 0 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY].hasWhitePiece()) && !echiquier.echecNoir(cases[aCase.nomCaseX - 1][aCase.nomCaseY])) {
+            if (aCase.nomCaseX > 0 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY].hasWhitePiece()) && canMove(cases[aCase.nomCaseX - 1][aCase.nomCaseY])) {
                 list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY]);
             }
-            if (aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX][aCase.nomCaseY - 1].hasWhitePiece()) && !echiquier.echecNoir(cases[aCase.nomCaseX][aCase.nomCaseY - 1])) {
+            if (aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX][aCase.nomCaseY - 1].hasWhitePiece()) && canMove(cases[aCase.nomCaseX][aCase.nomCaseY - 1])) {
+                list.add(cases[aCase.nomCaseX][aCase.nomCaseY - 1]);
+            }
+        } else {
+            if (aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX][aCase.nomCaseY + 1].hasBlackPiece()) && canMove(cases[aCase.nomCaseX][aCase.nomCaseY + 1])) {
+                list.add(cases[aCase.nomCaseX][aCase.nomCaseY + 1]);
+            }
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1].hasBlackPiece()) && canMove(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1])) {
+                list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1]);
+            }
+            if (aCase.nomCaseX < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY].hasBlackPiece()) && canMove(cases[aCase.nomCaseX + 1][aCase.nomCaseY])) {
+                list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY]);
+            }
+            if (aCase.nomCaseX > 0 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1].hasBlackPiece()) && canMove(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1])) {
+                list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1]);
+            }
+
+            if (aCase.nomCaseX > 0 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1].hasBlackPiece()) && canMove(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1])) {
+                list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1]);
+            }
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1].hasBlackPiece()) && canMove(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1])) {
+                list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1]);
+            }
+            if (aCase.nomCaseX > 0 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY].hasBlackPiece()) && canMove(cases[aCase.nomCaseX - 1][aCase.nomCaseY])) {
+                list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY]);
+            }
+            if (aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX][aCase.nomCaseY - 1].hasBlackPiece()) && canMove(cases[aCase.nomCaseX][aCase.nomCaseY - 1])) {
+                list.add(cases[aCase.nomCaseX][aCase.nomCaseY - 1]);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Case> getListOfPossibleTaken() {
+        List list = new ArrayList<>();
+        if (!isBlack) {
+            if (aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX][aCase.nomCaseY + 1].hasWhitePiece()) ) {
+                list.add(cases[aCase.nomCaseX][aCase.nomCaseY + 1]);
+            }
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1].hasWhitePiece()) ) {
+                list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1]);
+            }
+            if (aCase.nomCaseX < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY].hasWhitePiece()) ) {
+                list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY]);
+            }
+            if (aCase.nomCaseX > 0 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1].hasWhitePiece()) ) {
+                list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1]);
+            }
+
+            if (aCase.nomCaseX > 0 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1].hasWhitePiece())) {
+                list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1]);
+            }
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1].hasWhitePiece()) ) {
+                list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1]);
+            }
+            if (aCase.nomCaseX > 0 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY].hasWhitePiece())) {
+                list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY]);
+            }
+            if (aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX][aCase.nomCaseY - 1].hasWhitePiece())) {
                 list.add(cases[aCase.nomCaseX][aCase.nomCaseY - 1]);
             }
         } else {
@@ -148,4 +204,81 @@ public class Roi extends Piece {
         }
         return list;
     }
+
+    public boolean canMove(Case maCase) {
+        Case original = getCase();
+        aCase.piece = null;
+        aCase = maCase;
+        maCase.piece = this;
+        if (isBlack) {
+            if (echiquier.echecBlanc(getCase())) {
+                aCase = original;
+                maCase.piece = null;
+                aCase.piece = this;
+
+                return false;
+            }
+        } else {
+            if (echiquier.echecNoir(getCase())) {
+                aCase = original;
+                maCase.piece = null;
+                aCase.piece = this;
+
+                return false;
+            }
+        }
+        aCase.piece = this;
+        maCase.piece = null;
+        aCase = original;
+        return true;
+    }
+
+    public boolean isMat() {
+        List<Case> maListe = new ArrayList<>();
+        if (!isBlack) {
+            if (getListOfPossibleCases().isEmpty() && echiquier.echecNoir(aCase)) {
+                for (Piece piece : echiquier.blancs) {
+                    Case original = piece.getCase();
+                    list = piece.getListOfPossibleCases();
+                    for (Case maCase : maListe) {
+                        piece.aCase = maCase;
+                        maCase.piece = piece;
+                        if (!echiquier.echecNoir(aCase)) {
+                            maCase.piece = null;
+                            piece.aCase = original;
+                            piece.getCase().piece = piece;
+                            return false;
+                        }
+                        maCase.piece = null;
+                    }
+                    piece.aCase = original;
+                    piece.getCase().piece = piece;
+                }
+                return true;
+            }
+        } else {
+            if (getListOfPossibleCases().isEmpty() && echiquier.echecBlanc(aCase)) {
+                for (Piece piece : echiquier.noirs) {
+                    Case original = piece.getCase();
+                    list = piece.getListOfPossibleCases();
+                    for (Case maCase : maListe) {
+                        piece.aCase = maCase;
+                        maCase.piece = piece;
+                        if (!echiquier.echecBlanc(aCase)) {
+                            maCase.piece = null;
+                            piece.aCase = original;
+                            piece.getCase().piece = piece;
+                            return false;
+                        }
+                        maCase.piece = null;
+                    }
+                    piece.aCase = original;
+                    piece.getCase().piece = piece;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

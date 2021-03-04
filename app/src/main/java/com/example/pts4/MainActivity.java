@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         layout = findViewById(R.id.main);
-        Echiquier echiquier = new Echiquier(this, layout);
+        new Echiquier(this, layout);
 
     }
 

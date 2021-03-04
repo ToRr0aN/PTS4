@@ -1,6 +1,9 @@
 package com.example.pts4;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.lang.reflect.Method;
@@ -137,34 +141,45 @@ public class Echiquier {
         boolean mat = false;
 
         if (tour) {
-
-          /*  for (Piece piece : noirs) {
-                Case tmpCase = piece.getCase();
-                tmpCase.setPiece(new Pion(tmpCase, context, layout, false, this));
-                for (Piece piece2 : noirs) {
-
-                    List<Case> list = piece2.getListOfPossibleCases();
-                    for (Case aCase : list) {
-                        if (aCase.equals(tmpCase)) {
-                            tmpCase.imageView.setBackgroundColor(Color.RED);
-                        }
-                    }
-                }
-                tmpCase.piece.deletePiece();
-                tmpCase.setPiece(piece);
-            }
             echecNoir(roiB.getCase());
-            matNoir();*/
+            if (roiB.isMat()){
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();    // On créé un Alert dialog pour expliquer les règles
+                alertDialog.setTitle("Les noirs ont gagné !");
+                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Retour menu", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(context, Menu.class);
+                        context.startActivity(intent);
+                    }
+                });
+                alertDialog.show();
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                textView.setTextSize(15);
+            }
             turn.setY(height - turn.getHeight());
+            turn.setRotation(0);
             transformationCheck(!tour);
             for (Piece piece : blancs) {
                 piece.showDeplacement();
             }
-        } else {/*
-            echecBlanc(roiN.getCase());
-            matBlanc();*/
-
+        } else {
+            echecNoir(roiN.getCase());
+            if (roiN.isMat()){
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();    // On créé un Alert dialog pour expliquer les règles
+                alertDialog.setTitle("Les blancs ont gagné !");
+                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Retour menu", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(context, Menu.class);
+                        context.startActivity(intent);
+                    }
+                });
+                alertDialog.show();
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                textView.setTextSize(15);
+            }
             turn.setY(0);
+            turn.setRotation(180);
             layout.findViewById(R.id.tempTurn).setVisibility(View.INVISIBLE);
             transformationCheck(!tour);
             for (Piece piece : noirs) {
@@ -208,13 +223,14 @@ public class Echiquier {
 
     public boolean echecNoir(Case maCase) {
         for (Piece piece : noirs) {
-            List<Case> list;
+
+                List<Case> list;
 
             list = (piece).getListOfPossibleTaken();
 
 
             for (Case aCase : list) {
-                if (aCase.equals(maCase)) {
+                if (aCase.nomCaseY == maCase.nomCaseY && aCase.nomCaseX == maCase.nomCaseX) {
                     Log.e("Echec", "des noirs");
                     return true;
                 }
@@ -225,37 +241,19 @@ public class Echiquier {
 
     public boolean echecBlanc(Case maCase) {
         for (Piece piece : blancs) {
-            List<Case> list = piece.getListOfPossibleCases();
+            List<Case> list;
+
+            list = (piece).getListOfPossibleTaken();
+
+
             for (Case aCase : list) {
-                if (aCase.equals(maCase)) {
-                    Log.e("Echec", "des blancs");
+                if (aCase.nomCaseY == maCase.nomCaseY && aCase.nomCaseX == maCase.nomCaseX) {
+                    Log.e("Echec", "des noirs");
                     return true;
                 }
             }
         }
         return false;
-    }
-
-    public boolean matNoir() {
-        List<Case> n = roiB.getListOfPossibleCases();
-        for (Case aCase : n) {
-            if (!echecNoir(aCase)) {
-                return false;
-            }
-        }
-        Log.e("mat", "des noirs");
-        return true;
-    }
-
-    public boolean matBlanc() {
-        List<Case> n = roiN.getListOfPossibleCases();
-        for (Case aCase : n) {
-            if (!echecBlanc(aCase)) {
-                return false;
-            }
-        }
-        Log.e("mat", "des noirs");
-        return true;
     }
 
 }
