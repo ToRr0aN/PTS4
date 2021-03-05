@@ -92,7 +92,9 @@ public abstract class Piece {
         list.removeAll(listRemove);
         return list;
     }*/
-    public List<Case> getListOfPossibleTaken() {return getListOfPossibleCases();}
+    public List<Case> getListOfPossibleTaken() {
+        return getListOfPossibleCases();
+    }
 
     public void deletePiece() {
         layout.removeView(imageView);
@@ -107,37 +109,43 @@ public abstract class Piece {
 
     }
 
-    public boolean isKing(Case maCase){
-        if (maCase.piece !=null && maCase.piece instanceof Roi)
+    public boolean isKing(Case maCase) {
+        if (maCase.piece != null && maCase.piece instanceof Roi)
             return true;
         return false;
     }
 
     public boolean canMove(Case maCase) {
         Case original = getCase();
-        aCase.piece = null;
-        aCase = maCase;
+
+        Piece pOriginal = null;
+        if (maCase.piece != null) {
+            pOriginal = maCase.piece;
+            prise(maCase);
+        }else{
+            aCase.piece = null;
+            aCase = maCase;
+        }
         maCase.piece = this;
         if (isBlack) {
             if (echiquier.echecBlanc(echiquier.roiN.getCase())) {
                 aCase = original;
-                maCase.piece = null;
+                maCase.piece = pOriginal;
                 aCase.piece = this;
-
                 return false;
             }
         } else {
             if (echiquier.echecNoir(echiquier.roiB.getCase())) {
                 aCase = original;
-                maCase.piece = null;
+                maCase.piece = pOriginal;
                 aCase.piece = this;
-
                 return false;
             }
         }
         aCase.piece = this;
-        maCase.piece = null;
+        maCase.piece = pOriginal;
         aCase = original;
         return true;
+
     }
 }
