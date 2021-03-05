@@ -99,6 +99,91 @@ public class Fou extends Piece {
         if (!isBlack) {
             for (int i = 1; i < 8; i++) {
                 if (getCase().nomCaseY > 0 && getCase().nomCaseX > 0) {
+                    if (getCase().nomCaseY - i > -1 && getCase().nomCaseX - i > -1 && !(cases[getCase().nomCaseX - i][getCase().nomCaseY - i].hasWhitePiece()) && hasPiece1 && canMove(cases[getCase().nomCaseX - i][getCase().nomCaseY - i])) { //haut gauche
+                        list.add(cases[getCase().nomCaseX - i][getCase().nomCaseY - i]);
+                        if (cases[getCase().nomCaseX - i][getCase().nomCaseY - i].hasBlackPiece()) {
+                            hasPiece1 = false;
+                        }
+                    } else hasPiece1 = false;
+                }
+                if (getCase().nomCaseY < 8 && getCase().nomCaseX < 8) { // bas droit
+                    if (getCase().nomCaseY + i < 8 && getCase().nomCaseX + i < 8 && !(cases[getCase().nomCaseX + i][getCase().nomCaseY + i].hasWhitePiece()) && hasPiece2 && canMove(cases[getCase().nomCaseX + i][getCase().nomCaseY + i])) {
+                        list.add(cases[getCase().nomCaseX + i][getCase().nomCaseY + i]);
+                        if (cases[getCase().nomCaseX + i][getCase().nomCaseY + i].hasBlackPiece()) {
+                            hasPiece2 = false;
+                        }
+                    } else hasPiece2 = false;
+
+                }
+                if (getCase().nomCaseX > 0 && getCase().nomCaseY < 8) {
+                    if (getCase().nomCaseX - i > -1 && getCase().nomCaseY + i < 8 && !(cases[getCase().nomCaseX - i][getCase().nomCaseY + i].hasWhitePiece()) && (hasPiece3) && canMove(cases[getCase().nomCaseX - i][getCase().nomCaseY + i])) {
+                        list.add(cases[getCase().nomCaseX - i][getCase().nomCaseY + i]);
+                        if (cases[getCase().nomCaseX - i][getCase().nomCaseY + i].hasBlackPiece()) {
+                            hasPiece3 = false;
+                        }
+                    } else hasPiece3 = false;
+                }
+                if (getCase().nomCaseX < 8 && getCase().nomCaseY > 0) {
+                    if (getCase().nomCaseX + i < 8 && getCase().nomCaseY - i > -1 && !(cases[getCase().nomCaseX + i][getCase().nomCaseY - i].hasWhitePiece()) && hasPiece4 && canMove(cases[getCase().nomCaseX + i][getCase().nomCaseY - i])) {
+                        list.add(cases[getCase().nomCaseX + i][getCase().nomCaseY - i]);
+                        if (cases[getCase().nomCaseX + i][getCase().nomCaseY - i].hasBlackPiece()) {
+                            hasPiece4 = false;
+                        }
+                    } else hasPiece4 = false;
+                }
+            }
+        } else {
+            for (int i = 1; i < 8; i++) {
+                if (getCase().nomCaseY > 0 && getCase().nomCaseX > 0) {
+                    if (getCase().nomCaseY - i > -1 && getCase().nomCaseX - i > -1 && !(cases[getCase().nomCaseX - i][getCase().nomCaseY - i].hasBlackPiece()) && hasPiece1 && canMove(cases[getCase().nomCaseX - i][getCase().nomCaseY - i])) { //haut gauche
+                        list.add(cases[getCase().nomCaseX - i][getCase().nomCaseY - i]);
+                        if (cases[getCase().nomCaseX - i][getCase().nomCaseY - i].hasWhitePiece()) {
+                            hasPiece1 = false;
+                        }
+                    } else hasPiece1 = false;
+                }
+                if (getCase().nomCaseY < 8 && getCase().nomCaseX < 8) { // bas droit
+                    if (getCase().nomCaseY + i < 8 && getCase().nomCaseX + i < 8 && !(cases[getCase().nomCaseX + i][getCase().nomCaseY + i].hasBlackPiece()) && hasPiece2 && canMove(cases[getCase().nomCaseX + i][getCase().nomCaseY + i])) {
+                        list.add(cases[getCase().nomCaseX + i][getCase().nomCaseY + i]);
+                        if (cases[getCase().nomCaseX + i][getCase().nomCaseY + i].hasWhitePiece()) {
+                            hasPiece2 = false;
+                        }
+                    } else hasPiece2 = false;
+
+                }
+                if (getCase().nomCaseX > 0 && getCase().nomCaseY < 8) {
+                    if (getCase().nomCaseX - i > -1 && getCase().nomCaseY + i < 8 && !(cases[getCase().nomCaseX - i][getCase().nomCaseY + i].hasBlackPiece()) && (hasPiece3) && canMove(cases[getCase().nomCaseX - i][getCase().nomCaseY + i])) {
+                        list.add(cases[getCase().nomCaseX - i][getCase().nomCaseY + i]);
+                        if (cases[getCase().nomCaseX - i][getCase().nomCaseY + i].hasWhitePiece()) {
+                            hasPiece3 = false;
+                        }
+                    } else hasPiece3 = false;
+                }
+                if (getCase().nomCaseX < 8 && getCase().nomCaseY > 0) {
+                    if (getCase().nomCaseX + i < 8 && getCase().nomCaseY - i > -1 && !(cases[getCase().nomCaseX + i][getCase().nomCaseY - i].hasBlackPiece()) && hasPiece4 && canMove(cases[getCase().nomCaseX + i][getCase().nomCaseY - i])) {
+                        list.add(cases[getCase().nomCaseX + i][getCase().nomCaseY - i]);
+                        if (cases[getCase().nomCaseX + i][getCase().nomCaseY - i].hasWhitePiece()) {
+                            hasPiece4 = false;
+                        }
+                    } else hasPiece4 = false;
+                }
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Case> getListOfPossibleTaken() {
+        List list = new ArrayList<>();
+        boolean hasPiece1 = true;
+        boolean hasPiece2 = true;
+        boolean hasPiece3 = true;
+        boolean hasPiece4 = true;
+
+
+        if (!isBlack) {
+            for (int i = 1; i < 8; i++) {
+                if (getCase().nomCaseY > 0 && getCase().nomCaseX > 0) {
                     if (getCase().nomCaseY - i > -1 && getCase().nomCaseX - i > -1 && !(cases[getCase().nomCaseX - i][getCase().nomCaseY - i].hasWhitePiece()) && hasPiece1) { //haut gauche
                         list.add(cases[getCase().nomCaseX - i][getCase().nomCaseY - i]);
                         if (cases[getCase().nomCaseX - i][getCase().nomCaseY - i].hasBlackPiece()) {

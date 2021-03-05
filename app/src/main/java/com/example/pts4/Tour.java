@@ -77,7 +77,6 @@ public class Tour extends Piece {
 
                     }
                 } else {
-                    Log.e("test", "test");
                     for (Case maCase : list) {
                         maCase.getImageView().setOnClickListener(null);
                         maCase.clickable(true);
