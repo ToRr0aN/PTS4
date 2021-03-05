@@ -15,6 +15,7 @@ import java.util.function.BinaryOperator;
 
 public class Tour extends Piece {
 
+
     public Tour(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
         super(aCase, context, layout, isBlack, echiquier);
         if (isBlack)
@@ -101,7 +102,7 @@ public class Tour extends Piece {
         boolean hasPiece2 = true;
         boolean hasPiece3 = true;
         boolean hasPiece4 = true;
-
+        Log.e("haspiece1", Boolean.toString(hasPiece1));
 
         if (!isBlack) {
             for (int i = 1; i < 8; i++) {
@@ -177,4 +178,6 @@ public class Tour extends Piece {
         }
         return list;
     }
+
+
 }

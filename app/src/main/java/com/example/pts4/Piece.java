@@ -37,6 +37,7 @@ public abstract class Piece {
     public abstract void showDeplacement();
 
     public void deplacement(Case moovingCase) {
+        if (moovingCase.piece != null) moovingCase.piece.deletePiece();
         aCase.setPiece(null);
         moovingCase.setPiece(this);
         aCase = moovingCase;
@@ -110,5 +111,33 @@ public abstract class Piece {
         if (maCase.piece !=null && maCase.piece instanceof Roi)
             return true;
         return false;
+    }
+
+    public boolean canMove(Case maCase) {
+        Case original = getCase();
+        aCase.piece = null;
+        aCase = maCase;
+        maCase.piece = this;
+        if (isBlack) {
+            if (echiquier.echecBlanc(echiquier.roiN.getCase())) {
+                aCase = original;
+                maCase.piece = null;
+                aCase.piece = this;
+
+                return false;
+            }
+        } else {
+            if (echiquier.echecNoir(echiquier.roiB.getCase())) {
+                aCase = original;
+                maCase.piece = null;
+                aCase.piece = this;
+
+                return false;
+            }
+        }
+        aCase.piece = this;
+        maCase.piece = null;
+        aCase = original;
+        return true;
     }
 }

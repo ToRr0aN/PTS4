@@ -136,9 +136,9 @@ public class Pion extends Piece {
             if (uneCase.nomCaseX == aCase.nomCaseX) {
                 tmp.add(uneCase);
             }
-        }for (Case uneCase : tmp) {
-            maListe.remove(uneCase);
         }
+        maListe.removeAll(tmp);
+
         return maListe;
     }
 

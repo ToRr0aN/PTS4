@@ -159,7 +159,9 @@ public class Echiquier {
             turn.setY(height - turn.getHeight());
             turn.setRotation(0);
             transformationCheck(!tour);
+
             for (Piece piece : blancs) {
+              //  if (piece instanceof Tour) ((Tour) piece).reset();
                 piece.showDeplacement();
             }
         } else {
@@ -183,6 +185,7 @@ public class Echiquier {
             layout.findViewById(R.id.tempTurn).setVisibility(View.INVISIBLE);
             transformationCheck(!tour);
             for (Piece piece : noirs) {
+               // if (piece instanceof Tour) ((Tour) piece).reset();
                 piece.showDeplacement();
             }
         }
