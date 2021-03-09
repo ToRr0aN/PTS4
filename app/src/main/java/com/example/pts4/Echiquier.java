@@ -69,7 +69,7 @@ public class Echiquier {
         blancs = new ArrayList<>();
         noirs = new ArrayList<>();
 
-       /* for (int i = 0; i < 8; i++) {
+       for (int i = 0; i < 8; i++) {
             noirs.add(new Pion(cases[i][1], context, layout, true, this));
             blancs.add(new Pion(cases[i][6], context, layout, false, this));
         }
@@ -90,7 +90,7 @@ public class Echiquier {
 
         noirs.add(new Fou(cases[2][0], context, layout, true, this));
         noirs.add(new Fou(cases[5][0], context, layout, true, this));
-*/
+
         roiN = new Roi(cases[4][0], context, layout, true, this);
         noirs.add(roiN);
 
@@ -98,13 +98,9 @@ public class Echiquier {
         blancs.add(roiB);
 
 
-        //noirs.add(new Reine(cases[3][0], context, layout, true, this));
+        noirs.add(new Reine(cases[3][0], context, layout, true, this));
         blancs.add(new Reine(cases[3][7], context, layout, false, this));
 
-        blancs.add(new Reine(cases[2][7], context, layout, false, this));
-        blancs.add(new Reine(cases[1][7], context, layout, false, this));
-        blancs.add(new Reine(cases[5][7], context, layout, false, this));
-        blancs.add(new Reine(cases[6][7], context, layout, false, this));
 
 
         manche(true);

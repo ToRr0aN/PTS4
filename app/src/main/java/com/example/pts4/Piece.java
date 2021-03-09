@@ -31,6 +31,7 @@ public abstract class Piece {
         cases = echiquier.getCases();
         this.echiquier = echiquier;
         imageView = new ImageView(context);
+        if (isBlack) imageView.setRotation(180);
         this.isBlack = isBlack;
     }
 
