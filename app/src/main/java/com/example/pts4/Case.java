@@ -48,29 +48,32 @@ public class Case {
         return taille;
     }
 
-    public void clickable(boolean isClicked){
-        if (!isClicked)imageView.setBackgroundColor(Color.GREEN);
-        else imageView.setBackgroundColor(mainColor);
+    public void clickable(boolean isClicked) {
+        if (!isClicked) {
+            imageView.setBackgroundColor(Color.GREEN);
+        } else {
+            imageView.setBackgroundColor(mainColor);
+        }
     }
 
     public void setPiece(Piece piece) {
         this.piece = piece;
     }
 
-    public boolean hasBlackPiece(){
-        if ( piece!=null)
+    public boolean hasBlackPiece() {
+        if (piece != null)
             if (piece.isBlack) return true;
         return false;
     }
 
-    public boolean hasWhitePiece(){
-        if ( piece!=null)
+    public boolean hasWhitePiece() {
+        if (piece != null)
             if (!piece.isBlack) return true;
         return false;
     }
 
-    public boolean hasPiece(){
-        if (piece==null) return false;
+    public boolean hasPiece() {
+        if (piece == null) return false;
         return true;
     }
 

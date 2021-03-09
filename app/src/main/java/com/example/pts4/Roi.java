@@ -1,6 +1,7 @@
 package com.example.pts4;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -26,6 +27,7 @@ public class Roi extends Piece {
 
     @Override
     public void showDeplacement() {
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,7 +209,7 @@ public class Roi extends Piece {
 
 
 
-    public boolean isMat() {
+   /* public boolean isMat() {
         List<Case> maListe = new ArrayList<>();
         if (!isBlack) {
             if (getListOfPossibleTaken().isEmpty() && echiquier.echecNoir(aCase)) {
@@ -253,9 +255,68 @@ public class Roi extends Piece {
             }
         }
         return false;
+    }*/
+
+    public boolean isMat() {
+        List<Case> maListe = new ArrayList<>();
+        if (!isBlack) {
+            if (getListOfPossibleCases().isEmpty() && echiquier.echecNoir(getCase())){
+                for (Piece piece : echiquier.blancs) {
+                    if (!(piece.getListOfPossibleCases().isEmpty())){
+                        Log.e("nom piece", piece.getClass().toString());
+                        return false;
+
+                    }
+                }
+                Log.e("mat","mat");
+                return true;
+            }
+        } else {
+            if (getListOfPossibleCases().isEmpty() && echiquier.echecBlanc(getCase())){
+                for (Piece piece : echiquier.noirs) {
+                    if (!(piece.getListOfPossibleCases().isEmpty())){
+                        Log.e("nom piece", piece.getClass().toString());
+                        return false;
+
+                    }
+                }
+                Log.e("mat","mat");
+                return true;
+            }
+        }
+        return false;
     }
 
-    @Override
+    public boolean isPat() {
+        List<Case> maListe = new ArrayList<>();
+        if (!isBlack) {
+            if (getListOfPossibleCases().isEmpty() && !echiquier.echecNoir(getCase())){
+                for (Piece piece : echiquier.blancs) {
+                    if (!(piece.getListOfPossibleCases().isEmpty())){
+                        Log.e("nom piece", piece.getClass().toString());
+                        return false;
+
+                    }
+                }
+                Log.e("mat","mat");
+                return true;
+            }
+        } else {
+            if (getListOfPossibleCases().isEmpty() && !echiquier.echecBlanc(getCase())){
+                for (Piece piece : echiquier.noirs) {
+                    if (!(piece.getListOfPossibleCases().isEmpty())){
+                        Log.e("nom piece", piece.getClass().toString());
+                        return false;
+
+                    }
+                }
+                Log.e("mat","mat");
+                return true;
+            }
+        }
+        return false;
+    }
+   /* @Override
     public boolean canMove(Case maCase) {
         Case original = getCase();
         aCase.piece = null;
@@ -284,6 +345,6 @@ public class Roi extends Piece {
         maCase.piece = pOriginal;
         aCase = original;
         return true;
-    }
+    }*/
 
 }

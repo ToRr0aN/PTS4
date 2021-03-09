@@ -64,6 +64,7 @@ public abstract class Piece {
         });
     }
 
+
     public Case getCase() {
         return aCase;
     }
@@ -121,15 +122,20 @@ public abstract class Piece {
         Piece pOriginal = null;
         if (maCase.piece != null) {
             pOriginal = maCase.piece;
-            prise(maCase);
-        }else{
-            aCase.piece = null;
-            aCase = maCase;
+            if (pOriginal.isBlack) echiquier.noirs.remove(pOriginal);
+            else echiquier.blancs.remove(pOriginal);
         }
+        aCase.piece = null;
+        aCase = maCase;
+
         maCase.piece = this;
         if (isBlack) {
             if (echiquier.echecBlanc(echiquier.roiN.getCase())) {
                 aCase = original;
+                if (pOriginal != null) {
+                    if (pOriginal.isBlack) echiquier.noirs.add(pOriginal);
+                    else echiquier.blancs.add(pOriginal);
+                }
                 maCase.piece = pOriginal;
                 aCase.piece = this;
                 return false;
@@ -137,14 +143,22 @@ public abstract class Piece {
         } else {
             if (echiquier.echecNoir(echiquier.roiB.getCase())) {
                 aCase = original;
+                if (pOriginal != null) {
+                    if (pOriginal.isBlack) echiquier.noirs.add(pOriginal);
+                    else echiquier.blancs.add(pOriginal);
+                }
                 maCase.piece = pOriginal;
                 aCase.piece = this;
                 return false;
             }
         }
-        aCase.piece = this;
-        maCase.piece = pOriginal;
         aCase = original;
+        if (pOriginal != null) {
+            if (pOriginal.isBlack) echiquier.noirs.add(pOriginal);
+            else echiquier.blancs.add(pOriginal);
+        }
+        maCase.piece = pOriginal;
+        aCase.piece = this;
         return true;
 
     }

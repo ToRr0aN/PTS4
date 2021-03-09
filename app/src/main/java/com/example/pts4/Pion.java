@@ -99,10 +99,38 @@ public class Pion extends Piece {
     public List<Case> getListOfPossibleCases() {
         List list = new ArrayList<>();
         if (!isBlack) {
-            if (getCase().nomCaseY > 0 && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()))
+            if (getCase().nomCaseY > 0 && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()) && canMove(cases[getCase().nomCaseX][getCase().nomCaseY - 1]))
                 list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 1]);
-            if (getCase().nomCaseY - 1 > 0 && !cases[getCase().nomCaseX][getCase().nomCaseY - 2].hasPiece() && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()) && firstMoove)
+            if (getCase().nomCaseY - 1 > 0 && !cases[getCase().nomCaseX][getCase().nomCaseY - 2].hasPiece() && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()) && firstMoove && canMove(cases[getCase().nomCaseX][getCase().nomCaseY - 1]))
                 list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 2]);
+            if (getCase().nomCaseX > 0 && getCase().nomCaseY > 0)
+                if (cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1].hasBlackPiece() && canMove(cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1]))
+                    list.add(cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1]);
+            if (getCase().nomCaseX < 7 && getCase().nomCaseY > 0)
+                if (cases[getCase().nomCaseX + 1][getCase().nomCaseY - 1].hasBlackPiece() && canMove(cases[getCase().nomCaseX + 1][getCase().nomCaseY - 1]))
+                    list.add(cases[getCase().nomCaseX + 1][getCase().nomCaseY - 1]);
+
+        } else {
+            if (getCase().nomCaseY < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()) && canMove(cases[getCase().nomCaseX][getCase().nomCaseY + 1]))
+                list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 1]);
+            if (getCase().nomCaseY + 1 < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 2].hasPiece()) && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()) && firstMoove && canMove(cases[getCase().nomCaseX][getCase().nomCaseY + 2]))
+                list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 2]);
+            if (getCase().nomCaseX < 7 && getCase().nomCaseY < 7)
+                if (cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1].hasWhitePiece() && canMove(cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1]))
+                    list.add(cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1]);
+            if (getCase().nomCaseX > 0 && getCase().nomCaseY < 7)
+                if (cases[getCase().nomCaseX - 1][getCase().nomCaseY + 1].hasWhitePiece() && canMove(cases[getCase().nomCaseX - 1][getCase().nomCaseY + 1]))
+                    list.add(cases[getCase().nomCaseX - 1][getCase().nomCaseY + 1]);
+
+        }
+        return list;
+    }
+
+
+    @Override
+    public List<Case> getListOfPossibleTaken() {
+        List list = new ArrayList<>();
+        if (!isBlack) {
             if (getCase().nomCaseX > 0 && getCase().nomCaseY > 0)
                 if (cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1].hasBlackPiece())
                     list.add(cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1]);
@@ -111,10 +139,6 @@ public class Pion extends Piece {
                     list.add(cases[getCase().nomCaseX + 1][getCase().nomCaseY - 1]);
 
         } else {
-            if (getCase().nomCaseY < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()))
-                list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 1]);
-            if (getCase().nomCaseY + 1 < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 2].hasPiece()) && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()) && firstMoove)
-                list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 2]);
             if (getCase().nomCaseX < 7 && getCase().nomCaseY < 7)
                 if (cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1].hasWhitePiece())
                     list.add(cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1]);
@@ -126,7 +150,8 @@ public class Pion extends Piece {
         return list;
     }
 
-    @Override
+
+   /* @Override
     public List<Case> getListOfPossibleTaken() {
         List<Case> maListe = getListOfPossibleCases();
         List<Case> tmp = new ArrayList<>();
@@ -140,7 +165,7 @@ public class Pion extends Piece {
             maListe.remove(uneCase);
         }
         return maListe;
-    }
+    }*/
 
 
 }
