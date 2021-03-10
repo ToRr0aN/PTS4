@@ -1,12 +1,12 @@
-
 @startuml
 class com.example.pts4.Fou {
 + void showDeplacement()
 + List<Case> getListOfPossibleCases()
++ List<Case> getListOfPossibleTaken()
 }
-
 class com.example.pts4.Tour {
 + void showDeplacement()
++ List<Case> getListOfPossibleTaken()
 + List<Case> getListOfPossibleCases()
 }
 class com.example.pts4.Case {
@@ -30,6 +30,20 @@ class com.example.pts4.Pion {
 + List<Case> getListOfPossibleCases()
 + List<Case> getListOfPossibleTaken()
 }
+class com.example.pts4.Reine {
++ void showDeplacement()
++ List<Case> getListOfPossibleCases()
++ List<Case> getListOfPossibleTaken()
+}
+
+class com.example.pts4.EchiquierBullet {
+~ boolean first
+~ boolean firstFinish
+~ CountDownTimer countDownTimerBlanc
+~ TextView textBlancsTimer
+~ long counterBlancs
++ void manche(boolean)
+}
 abstract class com.example.pts4.Piece {
 ~ ImageView imageView
 ~ Case aCase
@@ -39,11 +53,12 @@ abstract class com.example.pts4.Piece {
 ~ List<Case> list
 ~ Case[][] cases
 ~ boolean isOnClick
-~ boolean firstMoove
+~ boolean firstMove
 ~ boolean isProtected
 ~ ConstraintLayout layout
 + {abstract}void showDeplacement()
 + void deplacement(Case)
++ void deplacementRocking(Case)
 + void prise(Case)
 + Case getCase()
 + Piece getPiece()
@@ -51,10 +66,13 @@ abstract class com.example.pts4.Piece {
 + void setProtected(boolean)
 + List<Case> getListOfPossibleTaken()
 + void deletePiece()
++ boolean isKing(Case)
++ boolean canMove(Case)
 }
 class com.example.pts4.Cheval {
 + void showDeplacement()
 + List<Case> getListOfPossibleCases()
++ List<Case> getListOfPossibleTaken()
 }
 class com.example.pts4.Echiquier {
 ~ Case[][] cases
@@ -65,6 +83,7 @@ class com.example.pts4.Echiquier {
 ~ Context context
 ~ TextView turn
 ~ int height
+~ Case tempCase
 + Case[][] getCases()
 + void reset()
 + void resetCase(Piece)
@@ -72,25 +91,25 @@ class com.example.pts4.Echiquier {
 + void transformationCheck(boolean)
 + boolean echecNoir(Case)
 + boolean echecBlanc(Case)
-+ boolean matNoir()
-+ boolean matBlanc()
 }
 class com.example.pts4.Roi {
+~ boolean rocking
 + void showDeplacement()
 + List<Case> getListOfPossibleCases()
-}
-class com.example.pts4.Reine {
-+ void showDeplacement()
-+ List<Case> getListOfPossibleCases()
++ List<Case> getListOfPossibleTaken()
++ boolean isMat()
++ boolean isPat()
 }
 
 
 com.example.pts4.Piece <|-- com.example.pts4.Fou
 com.example.pts4.Piece <|-- com.example.pts4.Tour
 com.example.pts4.Piece <|-- com.example.pts4.Pion
+com.example.pts4.Piece <|-- com.example.pts4.Reine
+com.example.pts4.Echiquier <|-- com.example.pts4.EchiquierBullet
 com.example.pts4.Piece <|-- com.example.pts4.Cheval
 com.example.pts4.Piece <|-- com.example.pts4.Roi
-com.example.pts4.Piece <|-- com.example.pts4.Reine
+
 
 com.example.pts4.Echiquier *-- com.example.pts4.Case
 com.example.pts4.Echiquier *-- com.example.pts4.Piece
