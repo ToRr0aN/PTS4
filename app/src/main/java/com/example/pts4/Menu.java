@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class Menu extends AppCompatActivity {
 
-    Button play;
+    Button play, bullet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,11 +18,18 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         play = findViewById(R.id.play);
+        bullet = findViewById(R.id.bullet);
 
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 play();
+            }
+        });
+        bullet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bullet();
             }
         });
     }
@@ -32,6 +39,13 @@ public class Menu extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void bullet(){
+        Intent intent = new Intent(this, Bullet.class);
+        startActivity(intent);
+
+    }
+
 
 
     @Override

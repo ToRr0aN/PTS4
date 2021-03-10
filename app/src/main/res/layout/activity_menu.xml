@@ -9,18 +9,17 @@
 
     <Button
         android:id="@+id/play"
-        android:layout_width="168dp"
-        android:layout_height="53dp"
+        android:layout_width="227dp"
+        android:layout_height="59dp"
         android:fontFamily="@font/advent_pro_semibold"
         android:includeFontPadding="false"
-        android:text="Jouer"
+        android:text="Jouer Normal"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.638" />
+        app:layout_constraintVertical_bias="0.574" />
 
     <TextView
         android:id="@+id/Titre"
@@ -37,4 +36,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.137" />
+
+    <Button
+        android:id="@+id/bullet"
+        android:layout_width="227dp"
+        android:layout_height="59dp"
+        android:fontFamily="@font/advent_pro_semibold"
+        android:text="Jouer Bullet"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.717" />
 </androidx.constraintlayout.widget.ConstraintLayout>
