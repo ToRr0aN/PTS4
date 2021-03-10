@@ -1,13 +1,11 @@
 package com.example.pts4;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
@@ -20,7 +18,7 @@ public abstract class Piece {
     List<Case> list;
     Case cases[][];
     boolean isOnClick = false;
-    boolean firstMoove = true;
+    boolean firstMove = true;
     boolean isProtected;
     ConstraintLayout layout;
 
@@ -52,6 +50,17 @@ public abstract class Piece {
 
     }
 
+    public void deplacementRocking(Case moovingCase) {
+        aCase.setPiece(null);
+        moovingCase.setPiece(this);
+        aCase = moovingCase;
+        imageView.setY(getCase().coordPixelY + getCase().taille / 2 - imageView.getLayoutParams().height / 2);
+        imageView.setX(getCase().coordPixelX);
+        echiquier.reset();
+        echiquier.manche(isBlack);
+
+    }
+
     public void prise(Case priseCase) {
         priseCase.piece.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +68,7 @@ public abstract class Piece {
                 //priseCase.piece.deletePiece();
                 priseCase.piece.imageView.setVisibility(View.INVISIBLE);
                 deplacement(priseCase);
-                firstMoove = false;
+                firstMove = false;
 
             }
         });

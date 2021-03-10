@@ -11,6 +11,8 @@ import java.util.List;
 
 public class Roi extends Piece {
 
+    boolean rocking = false;
+
     public Roi(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
         super(aCase, context, layout, isBlack, echiquier);
         if (isBlack)
@@ -43,12 +45,36 @@ public class Roi extends Piece {
                         if (isBlack) {
                             if (uneCase.hasWhitePiece()) {
                                 prise(uneCase);
+                            } else if (rocking && uneCase.nomCaseX == 2) {
+                                uneCase.imageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        rocking = false;
+                                        deplacement(uneCase);
+                                        cases[0][0].piece.deplacementRocking(cases[3][0]);
+                                        firstMove = false;
+                                        isOnClick = false;
+                                    }
+                                });
 
+
+                            }else if (rocking && uneCase.nomCaseX == 6) {
+                                uneCase.imageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        rocking = false;
+                                        deplacement(uneCase);
+                                        cases[7][0].piece.deplacementRocking(cases[5][0]);
+                                        firstMove = false;
+                                        isOnClick = false;
+                                    }
+                                });
                             } else {
                                 uneCase.imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         deplacement(uneCase);
+                                        firstMove = false;
                                         isOnClick = false;
                                     }
 
@@ -56,12 +82,38 @@ public class Roi extends Piece {
                             }
                         } else {
                             if (uneCase.hasBlackPiece()) {
+                                firstMove = false;
                                 prise(uneCase);
+                            } else if (rocking && uneCase.nomCaseX == 6) {
+                                uneCase.imageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        rocking = false;
+                                        deplacement(uneCase);
+                                        cases[7][7].piece.deplacementRocking(cases[5][7]);
+                                        firstMove = false;
+                                        isOnClick = false;
+                                    }
+                                });
+
+
+                            }else if (rocking && uneCase.nomCaseX == 2) {
+                                uneCase.imageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        rocking = false;
+                                        deplacement(uneCase);
+                                        cases[0][7].piece.deplacementRocking(cases[3][7]);
+                                        firstMove = false;
+                                        isOnClick = false;
+                                    }
+                                });
 
                             } else {
                                 uneCase.imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        firstMove = false;
                                         deplacement(uneCase);
 
                                         isOnClick = false;
@@ -118,6 +170,16 @@ public class Roi extends Piece {
             if (aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX][aCase.nomCaseY - 1].hasWhitePiece()) && canMove(cases[aCase.nomCaseX][aCase.nomCaseY - 1])) {
                 list.add(cases[aCase.nomCaseX][aCase.nomCaseY - 1]);
             }
+            if (firstMove && cases[1][7].piece == null && cases[2][7].piece == null && cases[3][7].piece == null && cases[0][7].piece instanceof Tour && !(cases[0][7].piece.isBlack) && cases[0][7].piece.firstMove && canMove(cases[2][7])) {
+                list.add(cases[2][7]);
+                rocking = true;
+            }
+
+            if (firstMove && cases[5][7].piece == null && cases[6][7].piece == null && cases[7][7].piece instanceof Tour && !(cases[7][7].piece.isBlack) && cases[7][7].piece.firstMove && canMove(cases[6][7])) {
+                list.add(cases[6][7]);
+                rocking = true;
+            }
+
         } else {
             if (aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX][aCase.nomCaseY + 1].hasBlackPiece()) && canMove(cases[aCase.nomCaseX][aCase.nomCaseY + 1])) {
                 list.add(cases[aCase.nomCaseX][aCase.nomCaseY + 1]);
@@ -144,6 +206,18 @@ public class Roi extends Piece {
             if (aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX][aCase.nomCaseY - 1].hasBlackPiece()) && canMove(cases[aCase.nomCaseX][aCase.nomCaseY - 1])) {
                 list.add(cases[aCase.nomCaseX][aCase.nomCaseY - 1]);
             }
+
+            if (firstMove && cases[1][0].piece == null && cases[2][0].piece == null && cases[3][7].piece == null && cases[0][0].piece instanceof Tour && cases[0][0].piece.isBlack && cases[0][0].piece.firstMove && canMove(cases[2][0])) {
+                list.add(cases[6][0]);
+                rocking = true;
+            }
+
+            if (firstMove && cases[6][0].piece == null && cases[5][0].piece == null && cases[7][0].piece instanceof Tour && cases[7][0].piece.isBlack && cases[7][0].piece.firstMove && canMove(cases[6][0])) {
+                list.add(cases[2][0]);
+                rocking = true;
+            }
+
+
         }
         return list;
     }
@@ -152,23 +226,23 @@ public class Roi extends Piece {
     public List<Case> getListOfPossibleTaken() {
         List list = new ArrayList<>();
         if (!isBlack) {
-            if (aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX][aCase.nomCaseY + 1].hasWhitePiece()) ) {
+            if (aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX][aCase.nomCaseY + 1].hasWhitePiece())) {
                 list.add(cases[aCase.nomCaseX][aCase.nomCaseY + 1]);
             }
-            if (aCase.nomCaseX < 7 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1].hasWhitePiece()) ) {
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1].hasWhitePiece())) {
                 list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY + 1]);
             }
-            if (aCase.nomCaseX < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY].hasWhitePiece()) ) {
+            if (aCase.nomCaseX < 7 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY].hasWhitePiece())) {
                 list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY]);
             }
-            if (aCase.nomCaseX > 0 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1].hasWhitePiece()) ) {
+            if (aCase.nomCaseX > 0 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1].hasWhitePiece())) {
                 list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY - 1]);
             }
 
             if (aCase.nomCaseX > 0 && aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1].hasWhitePiece())) {
                 list.add(cases[aCase.nomCaseX - 1][aCase.nomCaseY + 1]);
             }
-            if (aCase.nomCaseX < 7 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1].hasWhitePiece()) ) {
+            if (aCase.nomCaseX < 7 && aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1].hasWhitePiece())) {
                 list.add(cases[aCase.nomCaseX + 1][aCase.nomCaseY - 1]);
             }
             if (aCase.nomCaseX > 0 && !(cases[aCase.nomCaseX - 1][aCase.nomCaseY].hasWhitePiece())) {
@@ -177,6 +251,7 @@ public class Roi extends Piece {
             if (aCase.nomCaseY > 0 && !(cases[aCase.nomCaseX][aCase.nomCaseY - 1].hasWhitePiece())) {
                 list.add(cases[aCase.nomCaseX][aCase.nomCaseY - 1]);
             }
+
         } else {
             if (aCase.nomCaseY < 7 && !(cases[aCase.nomCaseX][aCase.nomCaseY + 1].hasBlackPiece())) {
                 list.add(cases[aCase.nomCaseX][aCase.nomCaseY + 1]);
@@ -260,27 +335,27 @@ public class Roi extends Piece {
     public boolean isMat() {
         List<Case> maListe = new ArrayList<>();
         if (!isBlack) {
-            if (getListOfPossibleCases().isEmpty() && echiquier.echecNoir(getCase())){
+            if (getListOfPossibleCases().isEmpty() && echiquier.echecNoir(getCase())) {
                 for (Piece piece : echiquier.blancs) {
-                    if (!(piece.getListOfPossibleCases().isEmpty())){
+                    if (!(piece.getListOfPossibleCases().isEmpty())) {
                         Log.e("nom piece", piece.getClass().toString());
                         return false;
 
                     }
                 }
-                Log.e("mat","mat");
+                Log.e("mat", "mat");
                 return true;
             }
         } else {
-            if (getListOfPossibleCases().isEmpty() && echiquier.echecBlanc(getCase())){
+            if (getListOfPossibleCases().isEmpty() && echiquier.echecBlanc(getCase())) {
                 for (Piece piece : echiquier.noirs) {
-                    if (!(piece.getListOfPossibleCases().isEmpty())){
+                    if (!(piece.getListOfPossibleCases().isEmpty())) {
                         Log.e("nom piece", piece.getClass().toString());
                         return false;
 
                     }
                 }
-                Log.e("mat","mat");
+                Log.e("mat", "mat");
                 return true;
             }
         }
@@ -290,27 +365,27 @@ public class Roi extends Piece {
     public boolean isPat() {
         List<Case> maListe = new ArrayList<>();
         if (!isBlack) {
-            if (getListOfPossibleCases().isEmpty() && !echiquier.echecNoir(getCase())){
+            if (getListOfPossibleCases().isEmpty() && !echiquier.echecNoir(getCase())) {
                 for (Piece piece : echiquier.blancs) {
-                    if (!(piece.getListOfPossibleCases().isEmpty())){
+                    if (!(piece.getListOfPossibleCases().isEmpty())) {
                         Log.e("nom piece", piece.getClass().toString());
                         return false;
 
                     }
                 }
-                Log.e("mat","mat");
+                Log.e("mat", "mat");
                 return true;
             }
         } else {
-            if (getListOfPossibleCases().isEmpty() && !echiquier.echecBlanc(getCase())){
+            if (getListOfPossibleCases().isEmpty() && !echiquier.echecBlanc(getCase())) {
                 for (Piece piece : echiquier.noirs) {
-                    if (!(piece.getListOfPossibleCases().isEmpty())){
+                    if (!(piece.getListOfPossibleCases().isEmpty())) {
                         Log.e("nom piece", piece.getClass().toString());
                         return false;
 
                     }
                 }
-                Log.e("mat","mat");
+                Log.e("mat", "mat");
                 return true;
             }
         }

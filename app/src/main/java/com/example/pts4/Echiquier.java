@@ -31,6 +31,7 @@ public class Echiquier {
     Context context;
     TextView turn;
     int height, width;
+    Case tempCase;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     public Echiquier(Context context, ConstraintLayout layout) {
@@ -79,17 +80,17 @@ public class Echiquier {
         noirs.add(new Tour(cases[0][0], context, layout, true, this));
         noirs.add(new Tour(cases[7][0], context, layout, true, this));
 
-        blancs.add(new Cheval(cases[6][7], context, layout, false, this));
-        blancs.add(new Cheval(cases[1][7], context, layout, false, this));
+        //blancs.add(new Cheval(cases[6][7], context, layout, false, this));
+        //blancs.add(new Cheval(cases[1][7], context, layout, false, this));
 
-        noirs.add(new Cheval(cases[1][0], context, layout, true, this));
-        noirs.add(new Cheval(cases[6][0], context, layout, true, this));
+        //noirs.add(new Cheval(cases[1][0], context, layout, true, this));
+        //noirs.add(new Cheval(cases[6][0], context, layout, true, this));
 
-        blancs.add(new Fou(cases[2][7], context, layout, false, this));
-        blancs.add(new Fou(cases[5][7], context, layout, false, this));
+        //blancs.add(new Fou(cases[2][7], context, layout, false, this));
+        //blancs.add(new Fou(cases[5][7], context, layout, false, this));
 
-        noirs.add(new Fou(cases[2][0], context, layout, true, this));
-        noirs.add(new Fou(cases[5][0], context, layout, true, this));
+        //noirs.add(new Fou(cases[2][0], context, layout, true, this));
+        //noirs.add(new Fou(cases[5][0], context, layout, true, this));
 
         roiN = new Roi(cases[4][0], context, layout, true, this);
         noirs.add(roiN);
@@ -98,8 +99,8 @@ public class Echiquier {
         blancs.add(roiB);
 
 
-        noirs.add(new Reine(cases[3][0], context, layout, true, this));
-        blancs.add(new Reine(cases[3][7], context, layout, false, this));
+        //noirs.add(new Reine(cases[3][0], context, layout, true, this));
+        //blancs.add(new Reine(cases[3][7], context, layout, false, this));
 
 
 

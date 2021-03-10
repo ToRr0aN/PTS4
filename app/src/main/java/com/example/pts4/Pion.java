@@ -1,16 +1,12 @@
 package com.example.pts4;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Point;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Pion extends Piece {
@@ -53,7 +49,7 @@ public class Pion extends Piece {
                                     @Override
                                     public void onClick(View v) {
                                         deplacement(uneCase);
-                                        firstMoove = false;
+                                        firstMove = false;
                                         isOnClick = false;
                                     }
 
@@ -68,7 +64,7 @@ public class Pion extends Piece {
                                     @Override
                                     public void onClick(View v) {
                                         deplacement(uneCase);
-                                        firstMoove = false;
+                                        firstMove = false;
                                         isOnClick = false;
                                     }
                                 });
@@ -101,7 +97,7 @@ public class Pion extends Piece {
         if (!isBlack) {
             if (getCase().nomCaseY > 0 && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()) && canMove(cases[getCase().nomCaseX][getCase().nomCaseY - 1]))
                 list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 1]);
-            if (getCase().nomCaseY - 1 > 0 && !cases[getCase().nomCaseX][getCase().nomCaseY - 2].hasPiece() && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()) && firstMoove && canMove(cases[getCase().nomCaseX][getCase().nomCaseY - 1]))
+            if (getCase().nomCaseY - 1 > 0 && !cases[getCase().nomCaseX][getCase().nomCaseY - 2].hasPiece() && !(cases[getCase().nomCaseX][getCase().nomCaseY - 1].hasPiece()) && firstMove && canMove(cases[getCase().nomCaseX][getCase().nomCaseY - 1]))
                 list.add(cases[getCase().nomCaseX][getCase().nomCaseY - 2]);
             if (getCase().nomCaseX > 0 && getCase().nomCaseY > 0)
                 if (cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1].hasBlackPiece() && canMove(cases[getCase().nomCaseX - 1][getCase().nomCaseY - 1]))
@@ -113,7 +109,7 @@ public class Pion extends Piece {
         } else {
             if (getCase().nomCaseY < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()) && canMove(cases[getCase().nomCaseX][getCase().nomCaseY + 1]))
                 list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 1]);
-            if (getCase().nomCaseY + 1 < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 2].hasPiece()) && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()) && firstMoove && canMove(cases[getCase().nomCaseX][getCase().nomCaseY + 2]))
+            if (getCase().nomCaseY + 1 < 7 && !(cases[getCase().nomCaseX][getCase().nomCaseY + 2].hasPiece()) && !(cases[getCase().nomCaseX][getCase().nomCaseY + 1].hasPiece()) && firstMove && canMove(cases[getCase().nomCaseX][getCase().nomCaseY + 2]))
                 list.add(cases[getCase().nomCaseX][getCase().nomCaseY + 2]);
             if (getCase().nomCaseX < 7 && getCase().nomCaseY < 7)
                 if (cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1].hasWhitePiece() && canMove(cases[getCase().nomCaseX + 1][getCase().nomCaseY + 1]))

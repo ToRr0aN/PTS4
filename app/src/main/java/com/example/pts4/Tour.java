@@ -48,12 +48,14 @@ public class Tour extends Piece {
                         uneCase.clickable(false);
                         if (isBlack) {
                             if (uneCase.hasWhitePiece()) {
+                                firstMove = false;
                                 prise(uneCase);
 
                             } else {
                                 uneCase.imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        firstMove = false;
                                         deplacement(uneCase);
                                         isOnClick = false;
                                     }
@@ -62,12 +64,14 @@ public class Tour extends Piece {
                             }
                         } else {
                             if (uneCase.hasBlackPiece()) {
+                                firstMove = false;
                                 prise(uneCase);
 
                             } else {
                                 uneCase.imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        firstMove = false;
                                         deplacement(uneCase);
 
                                         isOnClick = false;
@@ -177,7 +181,6 @@ public class Tour extends Piece {
         }
         return list;
     }
-
 
     @Override
     public List<Case> getListOfPossibleCases() {
