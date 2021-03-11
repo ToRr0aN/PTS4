@@ -32,6 +32,7 @@ public class Echiquier {
     TextView turn;
     int height, width;
     Case tempCase;
+    boolean finish = false;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     public Echiquier(Context context, ConstraintLayout layout) {
@@ -70,7 +71,7 @@ public class Echiquier {
         blancs = new ArrayList<>();
         noirs = new ArrayList<>();
 
-       for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++) {
             noirs.add(new Pion(cases[i][1], context, layout, true, this));
             blancs.add(new Pion(cases[i][6], context, layout, false, this));
         }
@@ -101,7 +102,6 @@ public class Echiquier {
 
         noirs.add(new Reine(cases[3][0], context, layout, true, this));
         blancs.add(new Reine(cases[3][7], context, layout, false, this));
-
 
 
         manche(true);
@@ -145,12 +145,12 @@ public class Echiquier {
 
         Log.e("nb noirs", Integer.toString(noirs.size()));
         Log.e("nb blacos", Integer.toString(blancs.size()));
-        if (tour){
-            for (Piece piece:noirs) {
+        if (tour) {
+            for (Piece piece : noirs) {
                 piece.imageView.setOnClickListener(null);
             }
-        }else {
-            for (Piece piece:blancs) {
+        } else {
+            for (Piece piece : blancs) {
                 piece.imageView.setOnClickListener(null);
             }
         }
@@ -163,13 +163,13 @@ public class Echiquier {
                 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Retour menu", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(context, Menu.class);
-                        context.startActivity(intent);
+                        goToMenu();
                     }
                 });
                 alertDialog.show();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextSize(15);
+                finish = true;
             }
             if (roiB.isPat()) {
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();    // On créé un Alert dialog pour expliquer les règles
@@ -177,13 +177,13 @@ public class Echiquier {
                 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Retour menu", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(context, Menu.class);
-                        context.startActivity(intent);
+                        goToMenu();
                     }
                 });
                 alertDialog.show();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextSize(15);
+                finish = true;
             }
             turn.setY(height - turn.getHeight());
             turn.setRotation(0);
@@ -200,13 +200,13 @@ public class Echiquier {
                 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Retour menu", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(context, Menu.class);
-                        context.startActivity(intent);
+                        goToMenu();
                     }
                 });
                 alertDialog.show();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextSize(15);
+                finish = true;
             }
             if (roiN.isPat()) {
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();    // On créé un Alert dialog pour expliquer les règles
@@ -214,20 +214,22 @@ public class Echiquier {
                 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Retour menu", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(context, Menu.class);
-                        context.startActivity(intent);
+                        goToMenu();
                     }
                 });
                 alertDialog.show();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextSize(15);
+                finish = true;
             }
             turn.setY(0);
             turn.setRotation(180);
             layout.findViewById(R.id.tempTurn).setVisibility(View.INVISIBLE);
             transformationCheck(!tour);
-            for (Piece piece : noirs) {
-                piece.showDeplacement();
+            if (!finish) {
+                for (Piece piece : noirs) {
+                    piece.showDeplacement();
+                }
             }
         }
 
@@ -298,6 +300,11 @@ public class Echiquier {
             }
         }
         return false;
+    }
+
+    public void goToMenu() {
+        Intent intent = new Intent(context, Menu.class);
+        context.startActivity(intent);
     }
 
 }

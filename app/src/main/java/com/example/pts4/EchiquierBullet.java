@@ -39,7 +39,7 @@ public class EchiquierBullet extends Echiquier {
             countDownTimerBlanc = new CountDownTimer(counterBlancs, 1) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    textBlancsTimer.setText(Long.toString(millisUntilFinished / 1000)+"s");
+                    textBlancsTimer.setText(Long.toString(millisUntilFinished / 1000) + "s");
                     counterBlancs = millisUntilFinished;
                 }
 
@@ -51,29 +51,29 @@ public class EchiquierBullet extends Echiquier {
                         alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Retour menu", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(context, Menu.class);
-                                context.startActivity(intent);
+                                goToMenu();
                             }
                         });
                         alertDialog.show();
                         TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                         textView.setTextSize(15);
+                        finish = true;
                     }
                 }
             }.start();
         } else {
-            if (countDownTimerNoirs != null) {
+            if (countDownTimerNoirs != null && !finish) {
                 countDownTimerBlanc.cancel();
                 counterBlancs += 3000;
             }
-            textBlancsTimer.setText(Long.toString(counterBlancs / 1000)+"s");
+            textBlancsTimer.setText(Long.toString(counterBlancs / 1000) + "s");
         }
         if (!tour) {
 
             countDownTimerNoirs = new CountDownTimer(counterNoirs, 1) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    textNoirsTimer.setText(Long.toString(millisUntilFinished / 1000)+"s");
+                    textNoirsTimer.setText(Long.toString(millisUntilFinished / 1000) + "s");
                     counterNoirs = millisUntilFinished;
 
 
@@ -86,24 +86,25 @@ public class EchiquierBullet extends Echiquier {
                     alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Retour menu", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(context, Menu.class);
-                            context.startActivity(intent);
+                            goToMenu();
                         }
                     });
                     alertDialog.show();
                     TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                     textView.setTextSize(15);
+                    finish = true;
+
                 }
             }.start();
         } else {
-            if (countDownTimerNoirs != null)
+            if (countDownTimerNoirs != null && !finish)
                 countDownTimerNoirs.cancel();
             counterNoirs += 3000;
 
             if (firstFinish) {
-                textNoirsTimer.setText(Long.toString(counterNoirs / 1000)+"s");
-            }else{
-                textNoirsTimer.setText(Long.toString(60)+"s");
+                textNoirsTimer.setText(Long.toString(counterNoirs / 1000) + "s");
+            } else {
+                textNoirsTimer.setText(Long.toString(60) + "s");
             }
         }
 
@@ -137,6 +138,8 @@ public class EchiquierBullet extends Echiquier {
                 alertDialog.show();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextSize(15);
+                finish = true;
+
             }
             if (roiB.isPat()) {
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();    // On créé un Alert dialog pour expliquer les règles
@@ -151,6 +154,8 @@ public class EchiquierBullet extends Echiquier {
                 alertDialog.show();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextSize(15);
+                finish = true;
+
             }
             turn.setY(height - turn.getHeight());
             turn.setRotation(0);
@@ -174,6 +179,8 @@ public class EchiquierBullet extends Echiquier {
                 alertDialog.show();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextSize(15);
+                finish = true;
+
             }
             if (roiN.isPat()) {
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();    // On créé un Alert dialog pour expliquer les règles
@@ -188,13 +195,21 @@ public class EchiquierBullet extends Echiquier {
                 alertDialog.show();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextSize(15);
+                finish = true;
+
             }
             turn.setY(0);
             turn.setRotation(180);
             layout.findViewById(R.id.tempTurn).setVisibility(View.INVISIBLE);
-            transformationCheck(!tour);
-            for (Piece piece : noirs) {
-                piece.showDeplacement();
+            if (finish){
+                countDownTimerNoirs.cancel();
+                countDownTimerBlanc.cancel();
+            }
+            if (!finish) {
+                transformationCheck(!tour);
+                for (Piece piece : noirs) {
+                    piece.showDeplacement();
+                }
             }
         }
     }

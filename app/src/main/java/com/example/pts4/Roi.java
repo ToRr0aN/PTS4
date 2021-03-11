@@ -207,13 +207,13 @@ public class Roi extends Piece {
                 list.add(cases[aCase.nomCaseX][aCase.nomCaseY - 1]);
             }
 
-            if (firstMove && cases[1][0].piece == null && cases[2][0].piece == null && cases[3][7].piece == null && cases[0][0].piece instanceof Tour && cases[0][0].piece.isBlack && cases[0][0].piece.firstMove && canMove(cases[2][0])) {
-                list.add(cases[6][0]);
+            if (firstMove && cases[1][0].piece == null && cases[2][0].piece == null && cases[3][0].piece == null && cases[0][0].piece instanceof Tour && cases[0][0].piece.isBlack && cases[0][0].piece.firstMove && canMove(cases[2][0])) {
+                list.add(cases[2][0]);
                 rocking = true;
             }
 
             if (firstMove && cases[6][0].piece == null && cases[5][0].piece == null && cases[7][0].piece instanceof Tour && cases[7][0].piece.isBlack && cases[7][0].piece.firstMove && canMove(cases[6][0])) {
-                list.add(cases[2][0]);
+                list.add(cases[6][0]);
                 rocking = true;
             }
 
