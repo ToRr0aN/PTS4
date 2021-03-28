@@ -8,20 +8,27 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.List;
 
+
 public abstract class Piece {
 
     ImageView imageView;
     Case aCase;
-    Context context;
     boolean isBlack;
     Echiquier echiquier;
-    List<Case> list;
-    Case cases[][];
+    List<Case> list; // Liste des coups possibles
+    Case cases[][]; //Liste des cases de l'échiquier
     boolean isOnClick = false;
     boolean firstMove = true;
-    boolean isProtected;
     ConstraintLayout layout;
 
+    /**
+     * Instanciation de la piece
+     * @param aCase Case ou se trouve la piece
+     * @param context Context de la piece
+     * @param layout Layout ou se trouve la piece
+     * @param isBlack Vrai si la piece est noire
+     * @param echiquier Echiquier ou se trouve la piece
+     */
     public Piece(Case aCase, Context context, ConstraintLayout layout, boolean isBlack, Echiquier echiquier) {
         aCase.setPiece(this);
         this.aCase = aCase;
@@ -33,8 +40,22 @@ public abstract class Piece {
         this.isBlack = isBlack;
     }
 
+    /**
+     * Permet d'afficher les déplacements possibles.
+     * Cela coloriera les cases en vert
+     * Voila comment se déroule généralement la méthode :
+     *         On met une action quand on clique sur la piece
+     *         Si la case n'es pas déjà cliqué (onClick), pour chaque case ou le déplacement est possible
+     *         si la case à une piece, on permet la prise,
+     *         sinon on mes un onClickListenner sur la case pour permettre le déplacement lorqu'on cliquera dessus
+     *         Sinon si le onClick est à false on désactive tout les onClickListenner et on recolorie les case avec leur couleur d'origine
+     */
     public abstract void showDeplacement();
 
+    /**
+     * Déplace une pièce dans une case
+     * @param moovingCase Case ou la piece va
+     */
     public void deplacement(Case moovingCase) {
         if (moovingCase.piece != null) moovingCase.piece.deletePiece();
         aCase.setPiece(null);
@@ -50,6 +71,10 @@ public abstract class Piece {
 
     }
 
+    /**
+     * Déplacement pour effectuer un rock (échange entre roi et tour)
+     * @param moovingCase
+     */
     public void deplacementRocking(Case moovingCase) {
         aCase.setPiece(null);
         moovingCase.setPiece(this);
@@ -61,6 +86,10 @@ public abstract class Piece {
 
     }
 
+    /**
+     * Déplacement sur une case ou se trouve une piece ennemie
+     * @param priseCase
+     */
     public void prise(Case priseCase) {
         priseCase.piece.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,30 +112,23 @@ public abstract class Piece {
         return this;
     }
 
+    /**
+     * Donne liste des cases ou la piece peut se déplacer sans mettre son roi en echec
+     * La méthode est composé de différentes boucles if qui vérifierons que la piece à le droit ou non d'aller dans certaines cases
+     * @return liste des cases
+     */
     public abstract List<Case> getListOfPossibleCases();
 
+    /**
+     * Donne liste des cases ou la piece peut se déplacer même si cela met en echec son roi
+     * @return liste des cases prenables
+     */
+    public abstract List<Case> getListOfPossibleTaken();
 
-    public void setProtected(boolean aProtected) {
-        isProtected = aProtected;
-    }
-
-    /*public List<Case> getListOfPossibleTaken() {
-        List<Case> list = getListOfPossibleCases();
-        List<Case> listRemove = new ArrayList<>();
-        Log.e("test",Integer.toString(list.size()));
-        for (Case maCase:list) {
-            if (maCase.piece != null && maCase.piece instanceof Roi){
-                Log.e("test","tee");
-                listRemove.add(maCase);
-            }
-        }
-        list.removeAll(listRemove);
-        return list;
-    }*/
-    public List<Case> getListOfPossibleTaken() {
-        return getListOfPossibleCases();
-    }
-
+    /**
+     * Supprimer une piece.
+     * Elle supprimera la piece mais l'enlevera aussi de la liste de l'échiquier
+     */
     public void deletePiece() {
         layout.removeView(imageView);
         imageView = null;
@@ -120,12 +142,11 @@ public abstract class Piece {
 
     }
 
-    public boolean isKing(Case maCase) {
-        if (maCase.piece != null && maCase.piece instanceof Roi)
-            return true;
-        return false;
-    }
-
+    /**
+     * Permet de savoir si une piece à le droit du bougé sur une case (getListeOfPossibleCases) sans mettre son roi en echec
+     * @param maCase
+     * @return
+     */
     public boolean canMove(Case maCase) {
         Case original = getCase();
 

@@ -283,61 +283,15 @@ public class Roi extends Piece {
     }
 
 
-
-   /* public boolean isMat() {
-        List<Case> maListe = new ArrayList<>();
-        if (!isBlack) {
-            if (getListOfPossibleTaken().isEmpty() && echiquier.echecNoir(aCase)) {
-                for (Piece piece : echiquier.blancs) {
-                    Case original = piece.getCase();
-                    list = piece.getListOfPossibleCases();
-                    for (Case maCase : maListe) {
-                        piece.aCase = maCase;
-                        maCase.piece = piece;
-                        if (!echiquier.echecNoir(aCase)) {
-                            maCase.piece = null;
-                            piece.aCase = original;
-                            piece.getCase().piece = piece;
-                            return false;
-                        }
-                        maCase.piece = null;
-                    }
-                    piece.aCase = original;
-                    piece.getCase().piece = piece;
-                }
-                return true;
-            }
-        } else {
-            if (getListOfPossibleTaken().isEmpty() && echiquier.echecBlanc(aCase)) {
-                for (Piece piece : echiquier.noirs) {
-                    Case original = piece.getCase();
-                    list = piece.getListOfPossibleCases();
-                    for (Case maCase : maListe) {
-                        piece.aCase = maCase;
-                        maCase.piece = piece;
-                        if (!echiquier.echecBlanc(aCase)) {
-                            maCase.piece = null;
-                            piece.aCase = original;
-                            piece.getCase().piece = piece;
-                            return false;
-                        }
-                        maCase.piece = null;
-                    }
-                    piece.aCase = original;
-                    piece.getCase().piece = piece;
-                }
-                return true;
-            }
-        }
-        return false;
-    }*/
-
+    /**
+     * Permet de savoir si le roi est en échec et mat
+     * @return vrai -> echec et mat
+     */
     public boolean isMat() {
-        List<Case> maListe = new ArrayList<>();
         if (!isBlack) {
-            if (getListOfPossibleCases().isEmpty() && echiquier.echecNoir(getCase())) {
+            if (getListOfPossibleCases().isEmpty() && echiquier.echecNoir(getCase())) { //Si le roi ne peu plus se déplacer et qu'il est en échec
                 for (Piece piece : echiquier.blancs) {
-                    if (!(piece.getListOfPossibleCases().isEmpty())) {
+                    if (!(piece.getListOfPossibleCases().isEmpty())) {      // et que aucun pion allié ne peu se déplacer
                         Log.e("nom piece", piece.getClass().toString());
                         return false;
 
@@ -362,12 +316,15 @@ public class Roi extends Piece {
         return false;
     }
 
+    /**
+     * Permet de savoir si le roi est en pat (n'est pas en echec mais ne peu plus se déplacer)
+     * @return
+     */
     public boolean isPat() {
-        List<Case> maListe = new ArrayList<>();
         if (!isBlack) {
-            if (getListOfPossibleCases().isEmpty() && !echiquier.echecNoir(getCase())) {
+            if (getListOfPossibleCases().isEmpty() && !echiquier.echecNoir(getCase())) { //Si le roi ne peu plus se déplacer et qu'il n'est pas en échec
                 for (Piece piece : echiquier.blancs) {
-                    if (!(piece.getListOfPossibleCases().isEmpty())) {
+                    if (!(piece.getListOfPossibleCases().isEmpty())) {      // et que aucun pion allié ne peu se déplacer
                         Log.e("nom piece", piece.getClass().toString());
                         return false;
 
@@ -391,35 +348,5 @@ public class Roi extends Piece {
         }
         return false;
     }
-   /* @Override
-    public boolean canMove(Case maCase) {
-        Case original = getCase();
-        aCase.piece = null;
-        aCase = maCase;
-        Piece pOriginal = null;
-        if (maCase.piece != null) pOriginal = maCase.piece;
-        maCase.piece = this;
-        if (isBlack) {
-            if (echiquier.echecBlanc(getCase())) {
-                aCase = original;
-                maCase.piece = pOriginal;
-                aCase.piece = this;
-
-                return false;
-            }
-        } else {
-            if (echiquier.echecNoir(getCase())) {
-                aCase = original;
-                maCase.piece = pOriginal;
-                aCase.piece = this;
-
-                return false;
-            }
-        }
-        aCase.piece = this;
-        maCase.piece = pOriginal;
-        aCase = original;
-        return true;
-    }*/
 
 }

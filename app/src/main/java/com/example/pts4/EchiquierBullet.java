@@ -13,6 +13,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+/**
+ * La seule différence de cette classe avec un échiquier est qu'elle décompte un temps lorsque chque joueur joue son tour
+ */
 public class EchiquierBullet extends Echiquier {
 
     boolean first = true;

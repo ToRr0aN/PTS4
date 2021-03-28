@@ -23,17 +23,21 @@ import java.util.List;
 
 public class Echiquier {
 
-    Case cases[][] = new Case[8][8];
-    List<Piece> blancs;
-    List<Piece> noirs;
+    Case cases[][] = new Case[8][8]; //Liste des cases de l'échiquier
+    List<Piece> blancs; //Liste des pions blancs
+    List<Piece> noirs; //Liste des pions noirs
     Roi roiN, roiB;
     ConstraintLayout layout;
     Context context;
     TextView turn;
     int height, width;
-    Case tempCase;
     boolean finish = false;
 
+    /**
+     * Déclaration de l'echiquier
+     * @param context Context de l'echiquier
+     * @param layout Layout de l'echiquier
+     */
     @RequiresApi(api = Build.VERSION_CODES.R)
     public Echiquier(Context context, ConstraintLayout layout) {
         this.context = context;
@@ -70,6 +74,9 @@ public class Echiquier {
         }
         blancs = new ArrayList<>();
         noirs = new ArrayList<>();
+
+        //Déclaration et placement des toutes les pieces
+        // On les met aussi dans les listes qui leur correspond (blanc ou noir)
 
         for (int i = 0; i < 8; i++) {
             noirs.add(new Pion(cases[i][1], context, layout, true, this));
@@ -113,6 +120,9 @@ public class Echiquier {
         return cases;
     }
 
+    /**
+     * Remise à 0 de tous les onClickListenner
+     */
     public void reset() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -123,6 +133,10 @@ public class Echiquier {
         }
     }
 
+    /**
+     * Remise à 0 de la case sur laquelle se trouve la piece passée en paramètre
+     * @param maPiece
+     */
     public void resetCase(Piece maPiece) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -140,8 +154,16 @@ public class Echiquier {
         }
     }
 
+    /**
+     * Méthode principale du jeu.
+     * Cette méthode est récursive et s'appellera elle même tant que le jeu n'est pas fini
+     *
+     * Premierement on regarde si il y à un echec et mat ou un pat qui sonnerait la fin du jeu
+     * Si le jeu n'est pas finit on appellera la méthode showDeplacement pour toutes les piece à qui c'est le tour
+     *
+     * @param tour true ->
+     */
     public void manche(boolean tour) {
-        boolean mat = false;
 
         Log.e("nb noirs", Integer.toString(noirs.size()));
         Log.e("nb blacos", Integer.toString(blancs.size()));
@@ -235,6 +257,10 @@ public class Echiquier {
 
     }
 
+    /**
+     * Passe un pion en reine s'il est arrivé au bout de l'échiquier
+     * @param couleur true -> piece blanche
+     */
     public void transformationCheck(boolean couleur) {
         List<Piece> deleteList = new ArrayList<>();
         if (couleur) {
@@ -267,6 +293,12 @@ public class Echiquier {
 
     }
 
+    /**
+     * Détection d'echec noir
+     * Permet de savoir si le roi blanc est mis en échec par les noirs
+     * @param maCase Case du roi blanc
+     * @return true -> echec
+     */
     public boolean echecNoir(Case maCase) {
         for (Piece piece : noirs) {
 
@@ -285,6 +317,12 @@ public class Echiquier {
         return false;
     }
 
+    /**
+     * Détection d'echec blanc
+     * Permet de savoir si le roi noir est mis en échec par les blanc
+     * @param maCase Case du roi blanc
+     * @return true -> echec
+     */
     public boolean echecBlanc(Case maCase) {
         for (Piece piece : blancs) {
             List<Case> list;
@@ -302,6 +340,9 @@ public class Echiquier {
         return false;
     }
 
+    /**
+     * Retour au menu
+     */
     public void goToMenu() {
         Intent intent = new Intent(context, Menu.class);
         context.startActivity(intent);

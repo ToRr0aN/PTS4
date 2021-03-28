@@ -15,12 +15,18 @@ public class Case {
     ImageView imageView;
     Piece piece;
     int mainColor;
-    //boolean isClicked;
 
-    public ImageView getImageView() {
-        return imageView;
-    }
-
+    /**
+     * Déclaration d'une case
+     * @param taille taille d'un côté d'une case
+     * @param coordPixelX coordonnée en x du côté haut gauche de la case
+     * @param coordPixelY coordonnée en y du côté haut gauche de la case
+     * @param context context de la case
+     * @param nomCaseX numéro de la case en x (0 sera la premiere colone)
+     * @param nomCaseY numéro de la case en y (0 sera la premiere ligne)
+     * @param color couleur d'origine de la case
+     * @param layout layout sur lequel la case sera affichée
+     */
     public Case(int taille, int coordPixelX, int coordPixelY, Context context, int nomCaseX, int nomCaseY, int color, ConstraintLayout layout) {
         this.taille = taille;
         this.coordPixelX = coordPixelX;
@@ -40,14 +46,19 @@ public class Case {
 
     }
 
-    public void putPion(Piece piece) {
-        this.piece = piece;
+
+    public ImageView getImageView() {
+        return imageView;
     }
 
     public int getTaille() {
         return taille;
     }
 
+    /**
+     * Colorie la case pour undiquer si on peut ou non cliquer dessus
+     * @param isClicked true la fait passer en clickable
+     */
     public void clickable(boolean isClicked) {
         if (!isClicked) {
             imageView.setBackgroundColor(Color.GREEN);

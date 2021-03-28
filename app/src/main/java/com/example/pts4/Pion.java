@@ -146,22 +146,4 @@ public class Pion extends Piece {
         return list;
     }
 
-
-   /* @Override
-    public List<Case> getListOfPossibleTaken() {
-        List<Case> maListe = getListOfPossibleCases();
-        List<Case> tmp = new ArrayList<>();
-
-
-        for (Case uneCase : maListe) {
-            if (uneCase.nomCaseX == aCase.nomCaseX) {
-                tmp.add(uneCase);
-            }
-        }for (Case uneCase : tmp) {
-            maListe.remove(uneCase);
-        }
-        return maListe;
-    }*/
-
-
 }

@@ -31,7 +31,6 @@ public class Cheval extends Piece {
     @Override
     public void showDeplacement() {
 
-
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
